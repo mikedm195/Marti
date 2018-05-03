@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mike.itesm.Activities.LoginActivity;
 import com.mike.itesm.Fragments.User.Admin.AddInventoryAdminFragment;
 import com.mike.itesm.Fragments.User.Admin.AddProductAdminFragment;
 import com.mike.itesm.Fragments.User.All.ShoppingCartFragment;
+import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.Objects.ShoppingCart;
 import com.mike.itesm.marti.R;
 
@@ -34,9 +34,11 @@ public class CommonClass {
             case R.id.logoutMenuBtn:
                 ShoppingCart.getInstance().shoppingCartArray.clear();
                 ShoppingCart.getInstance().setShoppingCartTotal(0.0);
-                actividad = new Intent(c, LoginActivity.class);
-                actividad.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                c.startActivity(actividad);
+                newFragment = new ProductsFragment();
+                transaction = ((AppCompatActivity)c).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
                 break;
             case R.id.addProductMenuBtn:
                 newFragment = new AddProductAdminFragment();

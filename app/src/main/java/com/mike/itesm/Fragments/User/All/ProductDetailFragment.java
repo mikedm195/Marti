@@ -1,12 +1,15 @@
 package com.mike.itesm.Fragments.User.All;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +17,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -27,6 +29,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import static com.mike.itesm.Services.Services.PRODUCTS_API;
 
 public class ProductDetailFragment extends Fragment {
@@ -38,7 +44,7 @@ public class ProductDetailFragment extends Fragment {
     private Float size = 0.0f;
     private Integer id;
     private Button addToCartBtn;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    ImageView photo;
     NetworkImageView image;
     SeekBar sizeBar;
 
@@ -64,9 +70,7 @@ public class ProductDetailFragment extends Fragment {
         priceTxt = (TextView) view.findViewById(R.id.priceDetailText);
         sizeTxt = (TextView) view.findViewById(R.id.sizeText);
         addToCartBtn = (Button) view.findViewById(R.id.addToCartButton);
-        if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();
-        image = (NetworkImageView) view.findViewById(R.id.thumbnailDetail);
+        photo = (ImageView) view.findViewById((R.id.photo));
         sizeBar = (SeekBar)view.findViewById(R.id.sizeBar);
 
         Bundle myIntent = this.getArguments();
@@ -93,41 +97,40 @@ public class ProductDetailFragment extends Fragment {
         });
 
         if(myIntent != null) {
-            productID = myIntent.getString("productID");
+            productID = myIntent.getString("product_id");
         }
 
-        StringRequest productsReq = new StringRequest(Request.Method.GET, PRODUCTS_API + "?id=" + productID,
+        Toast.makeText(getContext(), PRODUCTS_API + "?product_id=" + productID, Toast.LENGTH_SHORT).show();
+        StringRequest productsReq = new StringRequest(Request.Method.GET, PRODUCTS_API + "?product_id=" + productID,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progress_bar.cancel();
                         try {
-                            JSONObject res = new JSONObject(response);
-                            if (res.getString("code").equals("01"))
-                            {
-                                JSONArray arrayProducts = res.getJSONArray("product_data");
-                                JSONObject product = (JSONObject) arrayProducts.get(0);
+                            JSONObject product = new JSONObject(response);
 
-                                name = product.getString("name");
-                                color = product.getString("color");
-                                id = product.getInt("id");
-                                description = product.getString("description");
-                                imageURL = product.getString("image_url");
-                                price = product.getDouble("price");
+                            name = product.getString("name");
+                            color = product.getString("color");
+                            imageURL = product.getString("photo");
+                            price = product.getDouble("price");
 
-                                nameTxt.setText(name);
-                                colorTxt.setText(color);
-                                descriptionTxt.setText("ID: " + id + " | " + description);
-                                priceTxt.setText("$" + price);
-                                image.setImageUrl(imageURL, imageLoader);
-
-
-                            } else if (res.getString("code").equals("04"))
-                            {
-                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getContext(), R.string.unknownResponseText , Toast.LENGTH_SHORT).show();
+                            nameTxt.setText(name);
+                            colorTxt.setText(color);
+                            priceTxt.setText("$" + price);
+                            URL url = null;
+                            try {
+                                url = new URL(imageURL);
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
                             }
+                            Bitmap bmp = null;
+                            try {
+                                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            photo.setImageBitmap(bmp);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
