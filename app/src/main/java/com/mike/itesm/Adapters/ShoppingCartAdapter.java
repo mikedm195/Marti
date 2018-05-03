@@ -46,18 +46,18 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     @Override
     public void onBindViewHolder(ShoppingCartAdapter.ViewHolder holder,int position) {
         String name = list.get(position).getName();
-        String imageURL = list.get(position).getImageURL();
-        String brand = list.get(position).getBrand();
+        String imageURL = list.get(position).getPhoto();
+        String color = list.get(position).getColor();
         Double price = list.get(position).getPrice();
-        Float size = list.get(position).getSize();
-        String description = list.get(position).getDescription();
+        //Float size = list.get(position).getSize();
+        //String description = list.get(position).getDescription();
 
         holder.nameTxt.setText(name);
-        holder.brandTxt.setText(brand);
+        //holder.brandTxt.setText(brand);
         holder.priceTxt.setText("$" + price.toString());
         holder.image.setImageUrl(imageURL, imageLoader);
-        holder.sizeTxt.setText(AppController.getInstance().getApplicationContext().getResources().getString(R.string.sizeText) + " " + size);
-        holder.descriptionTxt.setText(description);
+        //holder.sizeTxt.setText(AppController.getInstance().getApplicationContext().getResources().getString(R.string.sizeText) + " " + size);
+        //holder.descriptionTxt.setText(description);
 
     }
 
@@ -87,7 +87,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
                 @Override
                 public void onClick(View v) {
                     Bundle id = new Bundle();
-                    id.putString("productID", String.valueOf(list.get(getAdapterPosition()).getProductID()));
+                    id.putString("productID", String.valueOf(list.get(getAdapterPosition()).getProduct_id()));
                     Fragment newFragment = new ProductDetailFragment();
                     FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
                     newFragment.setArguments(id);

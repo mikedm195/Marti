@@ -21,13 +21,14 @@ public class ParserJSONProducts {
         try {
             Product product = new Product();
 
-            product.setProductID(obj.getInt("id"));
+            product.setProduct_id(obj.getInt("product_id"));
+            product.setCategory_id(obj.getInt("category_id"));
             product.setName(obj.getString("name"));
-            product.setDescription(obj.getString("description"));
-            product.setBrand(obj.getString("brand"));
-            product.setImageURL(obj.getString("image_url"));
+            product.setPhoto(obj.getString("photo"));
+            product.setVideo(obj.getString("video"));
             product.setPrice(obj.getDouble("price"));
-            product.setCategory(obj.getInt("id_category"));
+            product.setColor(obj.getString("color"));
+            product.setAge(obj.getString("age"));
             return product;
 
         } catch (JSONException e1) {
@@ -48,13 +49,14 @@ public class ParserJSONProducts {
                 obj = arr.getJSONObject(i);
                 product = new Product();
 
-                product.setProductID(obj.getInt("id"));
+                product.setProduct_id(obj.getInt("product_id"));
+                product.setCategory_id(obj.getInt("category_id"));
                 product.setName(obj.getString("name"));
-                product.setDescription(obj.getString("description"));
-                product.setBrand(obj.getString("brand"));
-                product.setImageURL(obj.getString("image_url"));
+                product.setPhoto(obj.getString("photo"));
+                product.setVideo(obj.getString("video"));
                 product.setPrice(obj.getDouble("price"));
-                product.setCategory(obj.getInt("id_category"));
+                product.setColor(obj.getString("color"));
+                product.setAge(obj.getString("age"));
 
                 _array_products.add(product);
             }
@@ -78,19 +80,14 @@ public class ParserJSONProducts {
                 obj = arr.getJSONObject(i);
                 product = new Product();
 
-                product.setProductID(obj.getInt("id"));
+                product.setProduct_id(obj.getInt("product_id"));
+                product.setCategory_id(obj.getInt("category_id"));
                 product.setName(obj.getString("name"));
-                if(obj.getInt("status") == 1) {
-                    product.setDescription(AppController.getInstance().getApplicationContext().getResources().getString(R.string.orderPendingText));
-                } else if (obj.getInt("status") == 2) {
-                    product.setDescription(AppController.getInstance().getApplicationContext().getResources().getString(R.string.orderShippedText));
-                } else {
-                    product.setDescription(AppController.getInstance().getApplicationContext().getResources().getString(R.string.orderCompletedText));
-                }
-                product.setBrand(obj.getString("brand"));
-                product.setImageURL(obj.getString("image_url"));
-                product.setPrice(obj.getDouble("subtotal"));
-                product.setSize((float) obj.getDouble("size"));
+                product.setPhoto(obj.getString("photo"));
+                product.setVideo(obj.getString("video"));
+                product.setPrice(obj.getDouble("price"));
+                product.setColor(obj.getString("color"));
+                product.setAge(obj.getString("age"));
 
                 _array_products.add(product);
             }

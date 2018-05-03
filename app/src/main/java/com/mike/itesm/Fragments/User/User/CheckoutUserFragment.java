@@ -153,40 +153,11 @@ public class CheckoutUserFragment extends Fragment {
                         try {
                             String tempMessage;
                             JSONObject res = new JSONObject(response);
-                            if(res.getString("code").equals("01"))
-                            {
-                                tempMessage = getContext().getString(R.string.orderedText);
-                                ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).setDescription(tempMessage);
-                                adapter.notifyDataSetChanged();
-                            } else if (res.getString("code").equals("02"))
-                            {
-                                tempMessage = getContext().getString(R.string.notOrderedText) + ": " + getContext().getString(R.string.errorText);
-                                ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).setDescription(tempMessage);
-                                adapter.notifyDataSetChanged();
-                            }else if (res.getString("code").equals("03"))
-                            {
-                                tempMessage = getContext().getString(R.string.notOrderedText) + ": " + getContext().getString(R.string.outOfStockText);
-                                ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).setDescription(tempMessage);
-                                adapter.notifyDataSetChanged();
-                            } else if (res.getString("code").equals("04"))
-                            {
-                                tempMessage = getContext().getString(R.string.notOrderedText) + ": " + getContext().getString(R.string.errorText);
-                                ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).setDescription(tempMessage);
-                                adapter.notifyDataSetChanged();
-                            } else if (res.getString("code").equals("05"))
-                            {
-                                tempMessage = getContext().getString(R.string.notOrderedText) + ": " + getContext().getString(R.string.errorText);
-                                ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).setDescription(tempMessage);
-                                adapter.notifyDataSetChanged();
-                            } else {
-                                tempMessage = getContext().getString(R.string.notOrderedText) + ": " + getContext().getString(R.string.errorText);
-                                ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).setDescription(tempMessage);
-                                adapter.notifyDataSetChanged();
-                            }
+
                         } catch (JSONException e) {
                             String tempMessage;
                             tempMessage = getContext().getString(R.string.notOrderedText) + ": " + getContext().getString(R.string.errorText);
-                            ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).setDescription(tempMessage);
+
                             adapter.notifyDataSetChanged();
                         }
                     }
@@ -196,7 +167,6 @@ public class CheckoutUserFragment extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         String tempMessage;
                         tempMessage = getContext().getString(R.string.notOrderedText) + ": " + getContext().getString(R.string.errorText);
-                        ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).setDescription(tempMessage);
                         adapter.notifyDataSetChanged();
                     }
                 }){
@@ -204,9 +174,9 @@ public class CheckoutUserFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("id_order", "" + ShoppingCart.getInstance().getOrderID());
-                params.put("id_product",ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).getProductID().toString());
+                params.put("id_product",ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).getProduct_id().toString());
                 params.put("quantity","1");
-                params.put("size",ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).getSize().toString());
+                //params.put("size",ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).getSize().toString());
 
                 return params;
             }

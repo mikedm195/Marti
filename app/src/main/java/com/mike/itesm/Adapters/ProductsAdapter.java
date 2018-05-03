@@ -1,6 +1,9 @@
 package com.mike.itesm.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,10 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.mike.itesm.Fragments.User.Admin.ProductDetailAdminFragment;
 import com.mike.itesm.Fragments.User.All.ProductDetailFragment;
 import com.mike.itesm.Objects.Product;
@@ -21,13 +23,15 @@ import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
 import com.mike.itesm.Services.AppController;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder>{
 
     ArrayList<Product> list = null;
     Context context = null;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     public ProductsAdapter(Context context, ArrayList<Product> list) {
         this.context = context;
@@ -44,14 +48,26 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     @Override
     public void onBindViewHolder(ProductsAdapter.ViewHolder holder,int position) {
         String name = list.get(position).getName();
-        String imageURL = list.get(position).getImageURL();
-        String brand = list.get(position).getBrand();
+        String imageURL = list.get(position).getPhoto();
+        String color = list.get(position).getColor();
         Double price = list.get(position).getPrice();
 
         holder.nameTxt.setText(name);
-        holder.brandTxt.setText(brand);
+        holder.brandTxt.setText(color);
         holder.priceTxt.setText("$" + price.toString());
-        holder.image.setImageUrl(imageURL, imageLoader);
+        URL url = null;
+        try {
+            url = new URL(imageURL);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Bitmap bmp = null;
+        try {
+            bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        holder.imageURL.setImageBitmap(bmp);
     }
 
     @Override
@@ -61,14 +77,12 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView nameTxt, brandTxt, priceTxt;
-        NetworkImageView image;
+        ImageView imageURL;
         CardView card;
 
         public ViewHolder(final View viewItem) {
             super(viewItem);
-            if (imageLoader == null)
-                imageLoader = AppController.getInstance().getImageLoader();
-            image = (NetworkImageView) viewItem.findViewById(R.id.thumbnail);
+            imageURL = (ImageView) viewItem.findViewById(R.id.thumbnail);
             card = (CardView)  viewItem.findViewById(R.id.product_card);
             nameTxt = (TextView) viewItem.findViewById(R.id.nameText);
             brandTxt = (TextView) viewItem.findViewById(R.id.brandText);
@@ -78,7 +92,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     Bundle id = new Bundle();
-                    id.putString("productID", String.valueOf(list.get(getAdapterPosition()).getProductID()));
+                    id.putString("product_id", String.valueOf(list.get(getAdapterPosition()).getProduct_id()));
 
                     if(User.getInstance().getRole() == 1) {
                         Fragment newFragment = new ProductDetailAdminFragment();

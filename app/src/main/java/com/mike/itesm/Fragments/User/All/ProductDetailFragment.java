@@ -32,8 +32,8 @@ import static com.mike.itesm.Services.Services.PRODUCTS_API;
 public class ProductDetailFragment extends Fragment {
 
     private String productID;
-    private TextView nameTxt, brandTxt, descriptionTxt, priceTxt, sizeTxt;
-    private String name, brand, description, imageURL;
+    private TextView nameTxt, colorTxt, descriptionTxt, priceTxt, sizeTxt;
+    private String name, color, description, imageURL;
     private Double price;
     private Float size = 0.0f;
     private Integer id;
@@ -59,7 +59,7 @@ public class ProductDetailFragment extends Fragment {
         progress_bar.show();
 
         nameTxt = (TextView) view.findViewById(R.id.nameDetailText);
-        brandTxt = (TextView) view.findViewById(R.id.brandDetailText);
+        colorTxt = (TextView) view.findViewById(R.id.brandDetailText);
         descriptionTxt = (TextView) view.findViewById(R.id.descriptionDetailText);
         priceTxt = (TextView) view.findViewById(R.id.priceDetailText);
         sizeTxt = (TextView) view.findViewById(R.id.sizeText);
@@ -109,14 +109,14 @@ public class ProductDetailFragment extends Fragment {
                                 JSONObject product = (JSONObject) arrayProducts.get(0);
 
                                 name = product.getString("name");
-                                brand = product.getString("brand");
+                                color = product.getString("color");
                                 id = product.getInt("id");
                                 description = product.getString("description");
                                 imageURL = product.getString("image_url");
                                 price = product.getDouble("price");
 
                                 nameTxt.setText(name);
-                                brandTxt.setText(brand);
+                                colorTxt.setText(color);
                                 descriptionTxt.setText("ID: " + id + " | " + description);
                                 priceTxt.setText("$" + price);
                                 image.setImageUrl(imageURL, imageLoader);
@@ -164,13 +164,13 @@ public class ProductDetailFragment extends Fragment {
 
     public void addToCart() {
         Product thisProduct = new Product();
-        thisProduct.setProductID(id);
+        thisProduct.setProduct_id(id);
         thisProduct.setName(name);
         thisProduct.setPrice(price);
-        thisProduct.setBrand(brand);
-        thisProduct.setDescription(description);
-        thisProduct.setImageURL(imageURL);
-        thisProduct.setSize(size);
+        thisProduct.setColor(color);
+        //thisProduct.setAge(age);
+        thisProduct.setPhoto(imageURL);
+        //thisProduct.setSize(size);
         ShoppingCart.getInstance().setShoppingCartTotal(ShoppingCart.getInstance().getShoppingCartTotal() + price);
         ShoppingCart.getInstance().shoppingCartArray.add(thisProduct);
         Toast.makeText(getContext(), getContext().getString(R.string.productAddedToCartText) + " " + size , Toast.LENGTH_SHORT).show();

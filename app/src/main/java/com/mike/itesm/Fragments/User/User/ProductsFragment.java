@@ -55,28 +55,23 @@ public class ProductsFragment extends Fragment {
         progress_bar.setCancelable(false);
         progress_bar.show();
 
-        StringRequest productsReq = new StringRequest(Request.Method.GET, PRODUCTS_API,
+        Toast.makeText(getContext(), "Loading! "  , Toast.LENGTH_SHORT).show();
+
+        StringRequest productsReq = new StringRequest(Request.Method.GET, "http://192.168.0.16:3000/api/product/list",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progress_bar.cancel();
                         try {
-                            JSONObject res = new JSONObject(response);
-                            if (res.getString("code").equals("01"))
-                            {
-                                JSONArray products = res.getJSONArray("product_data");
-                                productList = ParserJSONProducts.parseaArreglo(products);
+                            JSONArray products = new JSONArray(response);
 
-                                adaptador = new ProductsAdapter(getContext(), productList);
-                                recyclerView.setAdapter(adaptador);
-                                adaptador.notifyDataSetChanged();
+                            productList = ParserJSONProducts.parseaArreglo(products);
 
-                            } else if (res.getString("code").equals("04"))
-                            {
-                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getContext(), R.string.unknownResponseText , Toast.LENGTH_SHORT).show();
-                            }
+                            adaptador = new ProductsAdapter(getContext(), productList);
+                            recyclerView.setAdapter(adaptador);
+                            adaptador.notifyDataSetChanged();
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();

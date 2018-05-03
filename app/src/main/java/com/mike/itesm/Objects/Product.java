@@ -5,75 +5,91 @@ package com.mike.itesm.Objects;
  */
 
 public class Product {
-    private Integer ProductID;
-    private String Name;
-    private String Description;
-    private String ImageURL;
-    private Double Price;
-    private String Brand;
-    private Integer Category;
-    private Float Size;
+    private Integer product_id;
+    private Integer category_id;
+    private String name;
+    private String photo;
+    private String video;
+    private Double price;
+    private String color;
+    private String age;
 
-    public void setProductID(Integer ProductID) {
-        this.ProductID = ProductID;
+    public Product(){
+
     }
 
-    public Integer getProductID() {
-        return ProductID;
+    public Product(Integer product_id, Integer category_id, String name, String photo, String video, Double price, String color, String age) {
+        this.product_id = product_id;
+        this.category_id = category_id;
+        this.name = name;
+        this.photo = photo;
+        this.video = video;
+        this.price = price;
+        this.color = color;
+        this.age = age;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public Integer getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(Integer product_id) {
+        this.product_id = product_id;
+    }
+
+    public Integer getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(Integer category_id) {
+        this.category_id = category_id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setDescription(String Description) {
-        this.Description = Description;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescription() {
-        return Description;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setImageURL(String ImageURL) {
-        this.ImageURL = ImageURL;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getImageURL() {
-        return ImageURL;
+    public String getVideo() {
+        return video;
     }
 
-    public void setPrice(Double Price) {
-        this.Price = Price;
+    public void setVideo(String video) {
+        this.video = video;
     }
 
-    public Double getPrice(){
-        return Price;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setBrand(String Brand) {
-        this.Brand = Brand;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public String getBrand(){
-        return Brand;
+    public String getColor() {
+        return color;
     }
 
-    public void setCategory(Integer Category) {
-        this.Category = Category;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public Integer getCategory(){
-        return Category;
+    public String getAge() {
+        return age;
     }
 
-
-    // FOR SHOPPING CART USE
-    public void setSize(Float Size) { this.Size = Size; }
-
-    public Float getSize() { return Size; }
-
+    public void setAge(String age) {
+        this.age = age;
+    }
 }
