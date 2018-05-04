@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,35 +15,37 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.mike.itesm.Objects.Product;
-import com.mike.itesm.Objects.ShoppingCart;
+import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
-import com.mike.itesm.Services.AppController;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.mike.itesm.Services.Services.PRODUCTS_API;
+import static com.mike.itesm.Services.Services.CART_POST_API;
 
 public class ProductDetailFragment extends Fragment {
 
     private String productID;
     private TextView nameTxt, colorTxt, descriptionTxt, priceTxt, sizeTxt;
-    private String name, color, description, imageURL;
+    private String name, color, imageURL, video, age;
     private Double price;
     private Float size = 0.0f;
-    private Integer id;
+    private Integer id, category_id;
     private Button addToCartBtn;
     ImageView photo;
     NetworkImageView image;
@@ -58,6 +61,8 @@ public class ProductDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
         view.setBackgroundResource(R.color.white);
+
+        Toast.makeText(getContext(), User.getInstance().getUserID()+"", Toast.LENGTH_SHORT).show();
 
         final ProgressDialog progress_bar = new ProgressDialog(getContext());
         progress_bar.setMessage(getContext().getString(R.string.loadingDataText));
@@ -100,7 +105,6 @@ public class ProductDetailFragment extends Fragment {
             productID = myIntent.getString("product_id");
         }
 
-        Toast.makeText(getContext(), PRODUCTS_API + "?product_id=" + productID, Toast.LENGTH_SHORT).show();
         StringRequest productsReq = new StringRequest(Request.Method.GET, PRODUCTS_API + "?product_id=" + productID,
                 new Response.Listener<String>() {
                     @Override
@@ -108,11 +112,14 @@ public class ProductDetailFragment extends Fragment {
                         progress_bar.cancel();
                         try {
                             JSONObject product = new JSONObject(response);
-
+                            id = product.getInt("product_id");
+                            category_id = product.getInt("category_id");
                             name = product.getString("name");
                             color = product.getString("color");
                             imageURL = product.getString("photo");
                             price = product.getDouble("price");
+                            video = product.getString("video");
+                            age = product.getString("age");
 
                             nameTxt.setText(name);
                             colorTxt.setText(color);
@@ -166,17 +173,52 @@ public class ProductDetailFragment extends Fragment {
     }
 
     public void addToCart() {
-        Product thisProduct = new Product();
-        thisProduct.setProduct_id(id);
-        thisProduct.setName(name);
-        thisProduct.setPrice(price);
-        thisProduct.setColor(color);
-        //thisProduct.setAge(age);
-        thisProduct.setPhoto(imageURL);
-        //thisProduct.setSize(size);
-        ShoppingCart.getInstance().setShoppingCartTotal(ShoppingCart.getInstance().getShoppingCartTotal() + price);
-        ShoppingCart.getInstance().shoppingCartArray.add(thisProduct);
-        Toast.makeText(getContext(), getContext().getString(R.string.productAddedToCartText) + " " + size , Toast.LENGTH_SHORT).show();
+
+        StringRequest addCartReq = new StringRequest(Request.Method.POST, CART_POST_API,
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject res = new JSONObject(response);
+                        if(res.getString("user_id").equals("-1"))
+                        {
+                            Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
+
+
+                        } else {
+                            Toast.makeText(getContext(), R.string.signedupText , Toast.LENGTH_SHORT).show();
+                            Fragment fragment = new LoginFragment();
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.frame_layout, fragment);
+                            transaction.commit();
+                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
+                    }
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), R.string.commsErrorText + " " + error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+                }
+            }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("user_id", User.getInstance().getUserID()+"");
+                params.put("product_id",id.toString());
+                params.put("quantity","1");
+                params.put("size",size.toString());
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(addCartReq);
+        Toast.makeText(getContext(), "Product added to shopping cart" , Toast.LENGTH_SHORT).show();
+
     }
 
 }

@@ -125,7 +125,7 @@ public class SignupFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("first_name",firstnameTxt.getText().toString());
+                params.put("name",firstnameTxt.getText().toString());
                 params.put("last_name",lastnameTxt.getText().toString());
                 params.put("email",emailTxt.getText().toString());
                 params.put("password",passwordOneTxt.getText().toString());

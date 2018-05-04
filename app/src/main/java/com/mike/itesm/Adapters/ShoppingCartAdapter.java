@@ -21,10 +21,6 @@ import com.mike.itesm.Services.AppController;
 
 import java.util.ArrayList;
 
-/**
- * Created by Herce on 01/05/2017.
- */
-
 public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>{
 
     ArrayList<Product> list = null;
