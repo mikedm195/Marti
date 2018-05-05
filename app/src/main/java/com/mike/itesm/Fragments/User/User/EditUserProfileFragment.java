@@ -31,7 +31,7 @@ import static com.mike.itesm.Services.Services.USER_PROFILE;
 public class EditUserProfileFragment extends Fragment {
 
     ProgressDialog progress_bar;
-    EditText firstnameField, lastnameField, emailField, addressField, stateField, zipcodeField;
+    EditText firstnameTxt, lastnameTxt, emailTxt, passwordOneTxt, passwordTwoText, addressTxt, genderText, heightText, weightText;
     Button editProfileDoBtn;
 
     public static EditUserProfileFragment newInstance() {
@@ -45,12 +45,15 @@ public class EditUserProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_user_profile, container, false);
         view.setBackgroundResource(R.color.white);
 
-        firstnameField = (EditText) view.findViewById(R.id.firstNameEditProfileTextField);
-        lastnameField  = (EditText) view.findViewById(R.id.lastnameEditProfileTextField);
-        emailField  = (EditText) view.findViewById(R.id.emailEditProfileTextField);
-        addressField = (EditText) view.findViewById(R.id.addressEditProfileTextField);
-        zipcodeField  = (EditText) view.findViewById(R.id.postalcodeEditProfileTextField);
-        stateField = (EditText) view.findViewById(R.id.stateEditProfileTextField);
+        firstnameTxt = (EditText)view.findViewById(R.id.firstNameTextField);
+        lastnameTxt = (EditText)view.findViewById(R.id.lastNameTextField);
+        addressTxt = (EditText)view.findViewById(R.id.addressTextField);
+        emailTxt = (EditText)view.findViewById(R.id.emailTextFieldSignup);
+        passwordOneTxt = (EditText)view.findViewById(R.id.passwordOneTextField);
+        passwordTwoText = (EditText)view.findViewById(R.id.passwordTwoTextField);
+        genderText = (EditText)view.findViewById(R.id.genderTextField);
+        heightText = (EditText)view.findViewById(R.id.heightTextField);
+        weightText = (EditText)view.findViewById(R.id.weightTextField);
         editProfileDoBtn = (Button)view.findViewById(R.id.editProfileDoButton);
 
         editProfileDoBtn.setOnClickListener(new View.OnClickListener() {
@@ -85,12 +88,13 @@ public class EditUserProfileFragment extends Fragment {
                             if (res.getString("code").equals("01"))
                             {
 
-                                User.getInstance().setFirstName(firstnameField.getText().toString());
-                                User.getInstance().setLastName(lastnameField.getText().toString());
-                                User.getInstance().setEmail(emailField.getText().toString());
-                                User.getInstance().setAddress(addressField.getText().toString());
-                                User.getInstance().setZipCode(zipcodeField.getText().toString());
-                                User.getInstance().setState(stateField.getText().toString());
+                                User.getInstance().setFirstName(firstnameTxt.getText().toString());
+                                User.getInstance().setLastName(lastnameTxt.getText().toString());
+                                User.getInstance().setEmail(emailTxt.getText().toString());
+                                User.getInstance().setAddress(addressTxt.getText().toString());
+                                User.getInstance().setGender(Integer.parseInt(genderText.getText().toString()));
+                                User.getInstance().setHeight(Integer.parseInt(heightText.getText().toString()));
+                                User.getInstance().setWeight(Integer.parseInt(weightText.getText().toString()));
 
                                 Toast.makeText(getContext(), R.string.profileEditedSuccessText , Toast.LENGTH_SHORT).show();
 
@@ -100,13 +104,7 @@ public class EditUserProfileFragment extends Fragment {
                                 transaction.addToBackStack(null);
                                 transaction.commit();
 
-                            } else if (res.getString("code").equals("02"))
-                            {
-                                Toast.makeText(getContext(), R.string.missingValuesText , Toast.LENGTH_SHORT).show();
-                            } else if (res.getString("code").equals("04"))
-                            {
-                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
-                            } else {
+                            }  else {
                                 Toast.makeText(getContext(), R.string.unknownResponseText , Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
@@ -126,12 +124,13 @@ public class EditUserProfileFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("user_id", "" + User.getInstance().getUserID());
-                params.put("first_name",firstnameField.getText().toString());
-                params.put("last_name",lastnameField.getText().toString());
-                params.put("email",emailField.getText().toString());
-                params.put("address",addressField.getText().toString());
-                params.put("zip_code",zipcodeField.getText().toString());
-                params.put("state",stateField.getText().toString());
+                params.put("first_name",firstnameTxt.getText().toString());
+                params.put("last_name",lastnameTxt.getText().toString());
+                params.put("email",emailTxt.getText().toString());
+                params.put("address",addressTxt.getText().toString());
+                params.put("gender",genderText.getText().toString());
+                params.put("height",heightText.getText().toString());
+                params.put("weight",weightText.getText().toString());
 
                 return params;
             }

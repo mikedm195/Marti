@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mike.itesm.Activities.MainActivity;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
@@ -106,11 +107,18 @@ public class LoginFragment extends Fragment {
                                 userData.getInstance().setRole(res.getInt("rol"));
 
                                 if(res.getString("rol").equals("0")) {
+
+                                    //Intent intent = new Intent(getActivity(), MainActivity.class);
+                                    //startActivity(intent);
+                                   // Intent myintent=new Intent(MainActivity.this, MainActivity.class);
+                                    // startActivity(myintent);
                                     Fragment fragment = new ProductsFragment();
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                     transaction.replace(R.id.frame_layout, fragment);
                                     transaction.commit();
                                 }
+
+
 
                             } else {
                                 Toast.makeText(getContext(), "Invalid email/password" , Toast.LENGTH_SHORT).show();

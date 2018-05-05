@@ -26,9 +26,9 @@ import static com.mike.itesm.Services.Services.USER_PROFILE;
 
 public class UserProfileFragment extends Fragment {
 
-    TextView nameTxt, emailTxt, addressTxt, zipCodeTxt, stateTxt;
-    String firstname, lastname, email, address, state;
-    Integer zipcode;
+    TextView firstnameTxt, emailTxt, addressTxt, genderText, heightText, weightText, nameTxt;
+    String firstname, lastname, email, address;
+    Integer weight;
     Button editProfileBtn;
 
     public static UserProfileFragment newInstance() {
@@ -45,8 +45,7 @@ public class UserProfileFragment extends Fragment {
         nameTxt = (TextView)view.findViewById(R.id.nameProfileText);
         emailTxt  = (TextView)view.findViewById(R.id.emailProfileText);
         addressTxt = (TextView)view.findViewById(R.id.addressProfileText);
-        zipCodeTxt  = (TextView)view.findViewById(R.id.zipcodeProfileText);
-        stateTxt = (TextView)view.findViewById(R.id.stateProfileText);
+        weightText  = (TextView)view.findViewById(R.id.weightProfileText);
         editProfileBtn = (Button)view.findViewById(R.id.editProfileButton);
 
         final ProgressDialog progress_bar = new ProgressDialog(getContext());
@@ -61,7 +60,7 @@ public class UserProfileFragment extends Fragment {
                         progress_bar.cancel();
                         try {
                             JSONObject res = new JSONObject(response);
-                            if (res.getString("code").equals("01"))
+                            if (!res.getString("user_id").equals("-1"))
                             {
                                 JSONObject userDetails = res.getJSONObject("user_data");
 
@@ -69,27 +68,21 @@ public class UserProfileFragment extends Fragment {
                                 lastname = userDetails.getString("last_name");
                                 email = userDetails.getString("email");
                                 address = userDetails.getString("address");
-                                state = userDetails.getString("state");
-                                zipcode = userDetails.getInt("zip_code");
+                                //heightText = userDetails.getInt("height");
 
                                 nameTxt.setText(firstname + " " + lastname);
                                 emailTxt.setText(email);
                                 addressTxt.setText(address);
-                                zipCodeTxt.setText("" + zipcode);
-                                stateTxt.setText(state);
+                                weightText.setText("" + weight);
 
                                 User.getInstance().setFirstName(firstname);
                                 User.getInstance().setLastName(lastname);
                                 User.getInstance().setEmail(email);
                                 User.getInstance().setAddress(address);
-                                User.getInstance().setZipCode("" + zipcode);
-                                User.getInstance().setState(state);
+                                User.getInstance().setWeight(weight);
 
 
-                            } else if (res.getString("code").equals("04"))
-                            {
-                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
-                            } else {
+                            }  else {
                                 Toast.makeText(getContext(), R.string.unknownResponseText , Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {

@@ -11,6 +11,7 @@ public class Services {
     public static final String PRODUCTS_API = host+"/api/product";
     public static final String PRODUCTS_LIST_API = host+"/api/product/list";
     public static final String CART_POST_API = host+"/api/cart";
+    public static final String PRODUCTS_LIST_API = host+"/api/product/list";
     public static final String PRODUCT_DELETE_API = "http://ubiquitous.csf.itesm.mx/~pddm-1021150/content/api_pf/product_delete.php";
     public static final String ORDER_PRODUCT_API = "http://ubiquitous.csf.itesm.mx/~pddm-1021150/content/api_pf/order_product.php";
     public static final String USER_PROFILE = "http://ubiquitous.csf.itesm.mx/~pddm-1021150/content/api_pf/user_details.php";
