@@ -65,7 +65,7 @@ public class CheckoutUserFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.orderreview_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new ShoppingCartAdapter(getContext(), ShoppingCart.getInstance().shoppingCartArray);
+        //adapter = new ShoppingCartAdapter(getContext(), ShoppingCart.getInstance().shoppingCartArray);
         recyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
@@ -90,7 +90,7 @@ public class CheckoutUserFragment extends Fragment {
                             JSONObject res = new JSONObject(response);
                             if(res.getString("code").equals("01"))
                             {
-                                ShoppingCart.getInstance().setOrderID(res.getInt("order_id"));
+                                //ShoppingCart.getInstance().setOrderID(res.getInt("order_id"));
                                 orderItems();
                                 resultCreateOrder = true;
                             } else if (res.getString("code").equals("02"))
@@ -126,7 +126,7 @@ public class CheckoutUserFragment extends Fragment {
                 params.put("shipping_address",User.getInstance().getAddress());
                 params.put("zip_code",User.getInstance().getZipCode());
                 params.put("state",User.getInstance().getState());
-                params.put("total","" + ShoppingCart.getInstance().getShoppingCartTotal());
+                //params.put("total","" + ShoppingCart.getInstance().getShoppingCartTotal());
                 params.put("online_purchase","1");
 
                 return params;
@@ -137,12 +137,12 @@ public class CheckoutUserFragment extends Fragment {
     }
 
     void orderItems() {
-        for(int i = 0; i < ShoppingCart.getInstance().shoppingCartArray.size(); i++)
+        /*for(int i = 0; i < ShoppingCart.getInstance().shoppingCartArray.size(); i++)
         {
             orderProduct(i);
         }
         progress_bar.cancel();
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();*/
     }
 
     void orderProduct(final int arrayIndex) {
@@ -173,8 +173,8 @@ public class CheckoutUserFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("id_order", "" + ShoppingCart.getInstance().getOrderID());
-                params.put("id_product",ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).getProduct_id().toString());
+                //params.put("id_order", "" + ShoppingCart.getInstance().getOrderID());
+                //params.put("id_product",ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).getProduct_id().toString());
                 params.put("quantity","1");
                 //params.put("size",ShoppingCart.getInstance().shoppingCartArray.get(arrayIndex).getSize().toString());
 
@@ -187,17 +187,17 @@ public class CheckoutUserFragment extends Fragment {
     public void onStop () {
         super.onStop();
         getActivity().setTitle(R.string.app_name);
-        ShoppingCart.getInstance().shoppingCartArray.clear();
-        ShoppingCart.getInstance().setOrderID(0);
-        ShoppingCart.getInstance().setShoppingCartTotal(0.0);
+        //ShoppingCart.getInstance().shoppingCartArray.clear();
+        //ShoppingCart.getInstance().setOrderID(0);
+        //ShoppingCart.getInstance().setShoppingCartTotal(0.0);
     }
 
     public void onDestroy () {
         super.onDestroy();
         getActivity().setTitle(R.string.app_name);
-        ShoppingCart.getInstance().shoppingCartArray.clear();
-        ShoppingCart.getInstance().setOrderID(0);
-        ShoppingCart.getInstance().setShoppingCartTotal(0.0);
+        //ShoppingCart.getInstance().shoppingCartArray.clear();
+        //ShoppingCart.getInstance().setOrderID(0);
+        //ShoppingCart.getInstance().setShoppingCartTotal(0.0);
     }
 
     @Override

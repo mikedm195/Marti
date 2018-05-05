@@ -32,8 +32,8 @@ public class CommonClass {
                 transaction.commit();
                 break;
             case R.id.logoutMenuBtn:
-                ShoppingCart.getInstance().shoppingCartArray.clear();
-                ShoppingCart.getInstance().setShoppingCartTotal(0.0);
+                //ShoppingCart.getInstance().shoppingCartArray.clear();
+                //ShoppingCart.getInstance().setShoppingCartTotal(0.0);
                 newFragment = new ProductsFragment();
                 transaction = ((AppCompatActivity)c).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, newFragment);

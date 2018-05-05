@@ -39,12 +39,12 @@ public class ShoppingCartFragment extends Fragment {
         checkoutBtn = (Button)view.findViewById(R.id.checkoutButton);
         totalTxt = (TextView)view.findViewById(R.id.totalCartText);
 
-        totalTxt.setText(getContext().getString(R.string.shoppingCartTotalText) + " $" + ShoppingCart.getInstance().getShoppingCartTotal());
+        //totalTxt.setText(getContext().getString(R.string.shoppingCartTotalText) + " $" + ShoppingCart.getInstance().getShoppingCartTotal());
 
         recyclerView = (RecyclerView) view.findViewById(R.id.shoppingcart_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new ShoppingCartAdapter(getContext(), ShoppingCart.getInstance().shoppingCartArray);
+        //adapter = new ShoppingCartAdapter(getContext(), ShoppingCart.getInstance().shoppingCartArray);
         recyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
@@ -52,11 +52,11 @@ public class ShoppingCartFragment extends Fragment {
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ShoppingCart.getInstance().getShoppingCartTotal() > 0) {
+                /*if (ShoppingCart.getInstance().getShoppingCartTotal() > 0) {
                     doCheckout();
                 } else {
                     Toast.makeText(getContext(), R.string.cartEmptyText , Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
 

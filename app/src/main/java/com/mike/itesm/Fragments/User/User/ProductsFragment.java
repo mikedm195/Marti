@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static com.mike.itesm.Services.Services.PRODUCTS_API;
+import static com.mike.itesm.Services.Services.PRODUCTS_LIST_API;
 
 public class ProductsFragment extends Fragment {
 
@@ -57,7 +57,7 @@ public class ProductsFragment extends Fragment {
 
         Toast.makeText(getContext(), "Loading! "  , Toast.LENGTH_SHORT).show();
 
-        StringRequest productsReq = new StringRequest(Request.Method.GET, "http://192.168.0.16:3000/api/product/list",
+        StringRequest productsReq = new StringRequest(Request.Method.GET, PRODUCTS_LIST_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
