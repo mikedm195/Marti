@@ -6,6 +6,7 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="weightProfileText">Weight</string>
     <string name="pNameText">Product Name</string>
     <string name="uploadingProductText">Uploading Product....</string>
     <string name="uploadedProductText">Product Uploaded </string>

@@ -16,11 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mike.itesm.Fragments.User.All.LoginFragment;
 import com.mike.itesm.Fragments.User.All.ShoppingCartFragment;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
+import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
 
 import java.util.Timer;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     int waitTime = 2000;
-
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +50,13 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+      //  HeaderLayout header = (HeaderLayout) findViewById(R.id.header_layout);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
 
         TimerTask task = new TimerTask() {
             @Override
@@ -108,20 +115,49 @@ public class MainActivity extends AppCompatActivity
         boolean fragmentSeleccionado = false;
         Fragment fragment = null;
 
-        if (id == R.id.nav_login) {
-            fragment = new LoginFragment();
-            fragmentSeleccionado = true;
-        } else if (id == R.id.nav_principal) {
-            fragment = new ProductsFragment();
-            fragmentSeleccionado = true;
-        } else if (id == R.id.nav_buscar) {
-            Toast.makeText(this, "buscar" , Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_Cart) {
-            fragment = new ShoppingCartFragment();
-            fragmentSeleccionado = true;
-        } else if (id == R.id.nav_logout) {
-            Toast.makeText(this, "logout" , Toast.LENGTH_SHORT).show();
+
+
+
+        if(User.getInstance().getUserID()<=0){
+            if (id == R.id.nav_login) {
+                fragment = new LoginFragment();
+                fragmentSeleccionado = true;
+            } else if (id == R.id.nav_principal) {
+                fragment = new ProductsFragment();
+                fragmentSeleccionado = true;
+            } else if (id == R.id.nav_principal) {
+                fragment = new ProductsFragment();
+                fragmentSeleccionado = true;
+            } else if (id == R.id.nav_buscar) {
+                Toast.makeText(this, "buscar" , Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_Cart) {
+                fragment = new ShoppingCartFragment();
+                fragmentSeleccionado = true;
+            }
+        } else{
+
+            String user_name = User.getInstance().getFirstName();
+            View headerView = navigationView.getHeaderView(0);
+            TextView navUsername = (TextView) headerView.findViewById(R.id.name);
+            navUsername.setText(user_name);
+
+            if (id == R.id.nav_principal) {
+                fragment = new ProductsFragment();
+                fragmentSeleccionado = true;
+                Toast.makeText(this, "Principal" , Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_principal) {
+                fragment = new ProductsFragment();
+                fragmentSeleccionado = true;
+            } else if (id == R.id.nav_buscar) {
+                Toast.makeText(this, "buscar" , Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_Cart) {
+                fragment = new ShoppingCartFragment();
+                fragmentSeleccionado = true;
+            } else if (id == R.id.nav_logout) {
+                Toast.makeText(this, "logout" , Toast.LENGTH_SHORT).show();
+            }
         }
+
 
         if(fragmentSeleccionado){
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();

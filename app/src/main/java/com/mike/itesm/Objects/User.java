@@ -13,13 +13,31 @@ public class User {
     private String Email;
     private int UserID;
     private int Role;
+    private int Gender;
+    private int Weight;
+    private int Height;
 
-    public String getFirstName() {
-        return FirstName;
+
+    public int getGender() {
+        return Gender;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setGender(int Gender) {
+        this.Gender = Gender;
+    }
+    public int getWeight() {
+        return Weight;
+    }
+
+    public void setWeight(int Weight) {
+        this.Weight = Weight;
+    }
+    public int getHeight() {
+        return Height;
+    }
+
+    public void setHeight(int Height) {
+        this.Height = Height;
     }
 
     public String getLastName() {
@@ -28,6 +46,13 @@ public class User {
 
     public void setLastName(String LastName) {
         this.LastName = LastName;
+    }
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
     }
 
     public String getAddress() {
