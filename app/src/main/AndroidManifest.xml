@@ -21,9 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.mike.itesm.Activities.Splash"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.mike.itesm.Activities.Admin.MainActivityAdmin" />
-        <activity android:name="com.mike.itesm.Activities.User.MainActivityUser" />
-        <activity android:name="com.mike.itesm.Fragments.User.All.splasch"></activity>
+
+
     </application>
 
 </manifest>
