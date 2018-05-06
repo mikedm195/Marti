@@ -30,9 +30,10 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     int waitTime = 2000;
     NavigationView navigationView;
+    Menu menu2;
+    public boolean loggedin = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +89,20 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        menu2 = navigationView.getMenu();
+        if(!loggedin) {
+            MenuItem logout = menu2.findItem(R.id.nav_logout);
+            logout.setVisible(false);
+            this.invalidateOptionsMenu();
+            MenuItem login = menu2.findItem(R.id.nav_login);
+            login.setVisible(true);
+        }else {
+            MenuItem login = menu2.findItem(R.id.nav_login);
+            login.setVisible(false);
+            this.invalidateOptionsMenu();
+            MenuItem logout = menu2.findItem(R.id.nav_logout);
+            logout.setVisible(true);
+        }
         return true;
     }
 
@@ -116,8 +131,6 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
 
-
-
         if(User.getInstance().getUserID()<=0){
             if (id == R.id.nav_login) {
                 fragment = new LoginFragment();
@@ -125,17 +138,14 @@ public class MainActivity extends AppCompatActivity
             } else if (id == R.id.nav_principal) {
                 fragment = new ProductsFragment();
                 fragmentSeleccionado = true;
-            } else if (id == R.id.nav_principal) {
-                fragment = new ProductsFragment();
-                fragmentSeleccionado = true;
-            } else if (id == R.id.nav_buscar) {
+            }  else if (id == R.id.nav_buscar) {
                 Toast.makeText(this, "buscar" , Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_Cart) {
                 fragment = new ShoppingCartFragment();
                 fragmentSeleccionado = true;
             }
-        } else{
-
+        } else if (loggedin || User.getInstance().getUserID() > 0){
+            loggedin = true;
             String user_name = User.getInstance().getFirstName();
             View headerView = navigationView.getHeaderView(0);
             TextView navUsername = (TextView) headerView.findViewById(R.id.name);
@@ -154,6 +164,10 @@ public class MainActivity extends AppCompatActivity
                 fragment = new ShoppingCartFragment();
                 fragmentSeleccionado = true;
             } else if (id == R.id.nav_logout) {
+                User.getInstance().setUserID(0);
+                loggedin = false;
+                MenuItem login = menu2.findItem(R.id.nav_login);
+                login.setVisible(true);
                 Toast.makeText(this, "logout" , Toast.LENGTH_SHORT).show();
             }
         }
