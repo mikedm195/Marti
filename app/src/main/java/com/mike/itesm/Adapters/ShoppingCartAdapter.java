@@ -1,6 +1,8 @@
 package com.mike.itesm.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,24 +12,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.mike.itesm.Fragments.User.All.ProductDetailFragment;
 import com.mike.itesm.Objects.Product;
+import com.mike.itesm.Objects.ShoppingCart;
 import com.mike.itesm.marti.R;
 import com.mike.itesm.Services.AppController;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>{
 
-    ArrayList<Product> list = null;
+    ArrayList<ShoppingCart> list = null;
     Context context = null;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    public ShoppingCartAdapter(Context context, ArrayList<Product> list) {
+    public ShoppingCartAdapter(Context context, ArrayList<ShoppingCart> list) {
         this.context = context;
         this.list = list;
     }
@@ -41,19 +45,32 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
     @Override
     public void onBindViewHolder(ShoppingCartAdapter.ViewHolder holder,int position) {
-        String name = list.get(position).getName();
-        String imageURL = list.get(position).getPhoto();
-        String color = list.get(position).getColor();
-        Double price = list.get(position).getPrice();
-        //Float size = list.get(position).getSize();
-        //String description = list.get(position).getDescription();
+        String name = list.get(position).getProduct().getName();
+        String imageURL = list.get(position).getProduct().getPhoto();
+        String color = list.get(position).getProduct().getColor();
+        Double price = list.get(position).getProduct().getPrice();
+        double size = list.get(position).getSize();
+        String age = list.get(position).getProduct().getAge();
 
         holder.nameTxt.setText(name);
         //holder.brandTxt.setText(brand);
         holder.priceTxt.setText("$" + price.toString());
-        holder.image.setImageUrl(imageURL, imageLoader);
-        //holder.sizeTxt.setText(AppController.getInstance().getApplicationContext().getResources().getString(R.string.sizeText) + " " + size);
-        //holder.descriptionTxt.setText(description);
+        URL url = null;
+        try {
+            url = new URL(imageURL);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Bitmap bmp = null;
+        try {
+            bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        holder.image.setImageBitmap(bmp);
+        holder.sizeTxt.setText("Size: " + size);
+        holder.colorTxt.setText("Color: "+color);
+        holder.ageTxt.setText("Age: "+age);
 
     }
 
@@ -63,27 +80,25 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView nameTxt, brandTxt, priceTxt, descriptionTxt, sizeTxt;
-        NetworkImageView image;
+        TextView nameTxt, priceTxt, colorTxt, sizeTxt, ageTxt;
+        ImageView image;
         CardView card;
 
         public ViewHolder(final View viewItem) {
             super(viewItem);
-            if (imageLoader == null)
-                imageLoader = AppController.getInstance().getImageLoader();
-            image = (NetworkImageView) viewItem.findViewById(R.id.thumbnailCart);
+            image = (ImageView) viewItem.findViewById(R.id.thumbnailCart);
             card = (CardView)  viewItem.findViewById(R.id.shoppingcart_card);
             nameTxt = (TextView) viewItem.findViewById(R.id.nameCartText);
-            brandTxt = (TextView) viewItem.findViewById(R.id.brandCartText);
             priceTxt = (TextView) viewItem.findViewById(R.id.priceCartText);
-            descriptionTxt = (TextView) viewItem.findViewById(R.id.descriptionCartText);
+            colorTxt = (TextView) viewItem.findViewById(R.id.colorCartText);
+            ageTxt = (TextView) viewItem.findViewById(R.id.ageCartText);
             sizeTxt = (TextView) viewItem.findViewById(R.id.sizeCartText);
 
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle id = new Bundle();
-                    id.putString("productID", String.valueOf(list.get(getAdapterPosition()).getProduct_id()));
+                    id.putString("product_id", String.valueOf(list.get(getAdapterPosition()).getProduct_id()));
                     Fragment newFragment = new ProductDetailFragment();
                     FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
                     newFragment.setArguments(id);

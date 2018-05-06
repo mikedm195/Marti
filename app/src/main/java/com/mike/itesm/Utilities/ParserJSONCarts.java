@@ -46,17 +46,19 @@ public class ParserJSONCarts {
         Product product = null;
         ShoppingCart cart = null;
         _array_carts.clear();
-
+        Log.w("objeto", "-------->"+arr.length()+"");
         try {
             for(int i = 0;i<arr.length();i++) {
 
                 obj = arr.getJSONObject(i);
 
+                Log.w("objeto", obj.toString(4));
+
                 JSONObject productObject = obj.getJSONObject("product");
+
                 product = new Product();
                 cart = new ShoppingCart();
-
-                product.setProduct_id(productObject.getInt("product_id"));
+                product.setProduct_id(productObject.getInt("id"));
                 product.setCategory_id(productObject.getInt("category_id"));
                 product.setName(productObject.getString("name"));
                 product.setPhoto(productObject.getString("photo"));
@@ -70,11 +72,10 @@ public class ParserJSONCarts {
                 cart.setProduct_id(obj.getInt("product_id"));
                 cart.setQuantity(obj.getInt("quantity"));
                 cart.setColor(obj.getString("color"));
-                cart.setSize(obj.getInt("size"));
-
-
+                cart.setSize(obj.getDouble("size"));
                 _array_carts.add(cart);
             }
+            Log.w("objeto","size--->"+_array_carts.size()+"");
             return _array_carts;
 
         } catch (JSONException e1) {

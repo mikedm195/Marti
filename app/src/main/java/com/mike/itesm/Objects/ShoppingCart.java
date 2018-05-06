@@ -14,12 +14,12 @@ public class ShoppingCart {
     private int product_id;
     private int quantity;
     private String color;
-    private int size;
+    private double size;
     private Product product;
 
     public ShoppingCart(){}
 
-    public ShoppingCart(int user_id, int product_id, int quantity, String color, int size, Product product) {
+    public ShoppingCart(int user_id, int product_id, int quantity, String color, double size, Product product) {
         this.user_id = user_id;
         this.product_id = product_id;
         this.quantity = quantity;
@@ -60,11 +60,11 @@ public class ShoppingCart {
         this.color = color;
     }
 
-    public int getSize() {
+    public double getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(double size) {
         this.size = size;
     }
 

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.android.volley.toolbox.NetworkImageView
+        <ImageView
             android:id="@+id/thumbnailCart"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -22,7 +22,8 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_launcher_background"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +59,7 @@
                     android:layout_weight="0.5">
 
                     <TextView
-                        android:id="@+id/brandCartText"
+                        android:id="@+id/colorCartText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Marca"
@@ -67,7 +68,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/descriptionCartText"
+                        android:id="@+id/ageCartText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-condensed"

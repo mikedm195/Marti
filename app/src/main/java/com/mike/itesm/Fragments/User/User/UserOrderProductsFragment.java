@@ -31,7 +31,7 @@ import static com.mike.itesm.Services.Services.ORDER_PRODUCT_API;
 public class UserOrderProductsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private ArrayList<Product> productList;
+    private ArrayList<ShoppingCartAdapter> productList;
     private ShoppingCartAdapter adapter;
     String orderID;
 
@@ -47,7 +47,7 @@ public class UserOrderProductsFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.orderproducts_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         productList = new ArrayList<>();
-        adapter = new ShoppingCartAdapter(getContext(), productList);
+        //adapter = new ShoppingCartAdapter(getContext(), productList);
         recyclerView.setAdapter(adapter);
 
         Bundle myIntent = this.getArguments();
@@ -71,9 +71,9 @@ public class UserOrderProductsFragment extends Fragment {
                             if (res.getString("code").equals("01"))
                             {
                                 JSONArray products = res.getJSONArray("order_products_data");
-                                productList = ParserJSONProducts.parseaArregloOrderProducts(products);
+                                //productList = ParserJSONCart.parseaArregloOrderProducts(products);
 
-                                adapter = new ShoppingCartAdapter(getContext(), productList);
+                                //adapter = new ShoppingCartAdapter(getContext(), productList);
                                 recyclerView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
 

@@ -109,7 +109,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@android:color/black"
-                android:text="@string/addtocartText"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
