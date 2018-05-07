@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.mike.itesm.Services.Services.SIGNUP_API;
 import static com.mike.itesm.Services.Services.USER_PROFILE;
 
 public class EditUserProfileFragment extends Fragment {
@@ -78,14 +79,14 @@ public class EditUserProfileFragment extends Fragment {
         progress_bar.setCancelable(false);
         progress_bar.show();
 
-        StringRequest editProfileReq = new StringRequest(Request.Method.POST, USER_PROFILE,
+        StringRequest editProfileReq = new StringRequest(Request.Method.PUT, SIGNUP_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progress_bar.cancel();
                         try {
                             JSONObject res = new JSONObject(response);
-                            if (res.getString("code").equals("01"))
+                            if(!res.getString("user_id").equals("-1"))
                             {
 
                                 User.getInstance().setFirstName(firstnameTxt.getText().toString());
@@ -108,7 +109,7 @@ public class EditUserProfileFragment extends Fragment {
                                 Toast.makeText(getContext(), R.string.unknownResponseText , Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -124,13 +125,7 @@ public class EditUserProfileFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("user_id", "" + User.getInstance().getUserID());
-                params.put("first_name",firstnameTxt.getText().toString());
-                params.put("last_name",lastnameTxt.getText().toString());
-                params.put("email",emailTxt.getText().toString());
-                params.put("address",addressTxt.getText().toString());
-                params.put("gender",genderText.getText().toString());
-                params.put("height",heightText.getText().toString());
-                params.put("weight",weightText.getText().toString());
+
 
                 return params;
             }

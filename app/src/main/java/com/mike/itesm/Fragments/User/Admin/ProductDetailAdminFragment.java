@@ -268,7 +268,7 @@ public class ProductDetailAdminFragment extends Fragment {
 
         progress_bar.show();
 
-        StringRequest deleteProduct = new StringRequest(Request.Method.POST, PRODUCT_DELETE_API,
+        StringRequest deleteProduct = new StringRequest(Request.Method.PUT, PRODUCTS_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
