@@ -51,8 +51,6 @@ public class ParserJSONCarts {
 
                 obj = arr.getJSONObject(i);
 
-                Log.w("objeto", obj.toString(4));
-
                 JSONObject productObject = obj.getJSONObject("product");
 
                 product = new Product();

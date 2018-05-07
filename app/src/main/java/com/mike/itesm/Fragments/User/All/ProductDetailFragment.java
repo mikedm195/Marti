@@ -115,15 +115,14 @@ public class ProductDetailFragment extends Fragment {
                     public void onResponse(String response) {
                         progress_bar.cancel();
                         try {
-                            Log.w("value",response);
                             if(response!=null){
                                 addToCartBtn.setText("REMOVE FROM CART");
                                 isProductInCart = true;
+                            }else{
+                                addToCartBtn.setText("ADD TO CART");
+                                isProductInCart = false;
                             }
-                            if(isProductInCart)
-                                Log.w("value","true");
-                            else
-                                Log.w("value","false");
+
                             JSONObject product = new JSONObject(response);
 
                         } catch (JSONException e) {
@@ -142,6 +141,12 @@ public class ProductDetailFragment extends Fragment {
                     }
                 });
         Volley.newRequestQueue(getContext()).add(cartReq);
+
+        if(isProductInCart){
+            addToCartBtn.setText("REMOVE FROM CART");
+        }else{
+            addToCartBtn.setText("ADD TO CART");
+        }
 
         StringRequest productsReq = new StringRequest(Request.Method.GET, PRODUCTS_API + "?product_id=" + productID,
                 new Response.Listener<String>() {

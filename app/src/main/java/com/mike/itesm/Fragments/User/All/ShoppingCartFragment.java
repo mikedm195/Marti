@@ -55,11 +55,11 @@ public class ShoppingCartFragment extends Fragment {
     private int sellerID;
     private RecyclerView recyclerView;
     private ArrayList<ShoppingCart> cartList;
-    private ArrayList<Seller> sellerList = new ArrayList<Seller>();
     private ShoppingCartAdapter adapter;
     private Button checkoutBtn;
     private Spinner sellerSpinner;
     ArrayAdapter<Seller> spinnerAdapter;
+    private ArrayList<Seller> sellerList = new ArrayList<Seller>();
     private TextView totalTxt;
     String stringDetails;
 
@@ -126,7 +126,6 @@ public class ShoppingCartFragment extends Fragment {
                                         seller.getInt("seller_id"),
                                         seller.getString("name")
                                     );
-                                    Log.w("value",sellerObject.getId() + " "+ sellerObject.getName());
                                     sellerList.add(sellerObject);
                                 }
                                 spinnerAdapter = new ArrayAdapter<Seller> (getContext(), android.R.layout.simple_list_item_1, sellerList);

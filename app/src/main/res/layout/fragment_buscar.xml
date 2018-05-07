@@ -4,63 +4,83 @@
     android:layout_height="match_parent"
     tools:context="com.mike.itesm.Fragments.User.All.Buscar">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
     <LinearLayout
         android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_width="fill_parent">
 
-        <TextView
-            android:id="@+id/AgeTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Edad"
-            android:padding="20dp"/>
+            <TextView
+                android:id="@+id/AgeTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edad"
+                android:padding="20dp"/>
 
-        <Spinner
-            android:layout_marginBottom="20dp"
-            android:padding="20dp"
-            android:id="@+id/AgeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Spinner
+                android:padding="20dp"
+                android:id="@+id/AgeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:padding="20dp"
-            android:id="@+id/CategoryTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Categoría" />
+        </LinearLayout>
 
-        <Spinner
-            android:layout_marginBottom="20dp"
-            android:padding="20dp"
-            android:id="@+id/CategorySpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_width="fill_parent">
 
-        <TextView
-            android:padding="20dp"
-            android:id="@+id/GenderTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Género" />
+            <TextView
+                android:padding="20dp"
+                android:id="@+id/CategoryTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Categoría" />
 
-        <Spinner
-            android:layout_marginBottom="20dp"
-            android:padding="20dp"
-            android:id="@+id/GenderSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Spinner
+                android:padding="20dp"
+                android:id="@+id/CategorySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_width="fill_parent">
+
+            <TextView
+                android:padding="20dp"
+                android:id="@+id/ColorTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Color" />
+
+            <Spinner
+                android:padding="20dp"
+                android:id="@+id/ColorSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/BuscarButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Buscar" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/products_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp"></android.support.v7.widget.RecyclerView>
+
     </LinearLayout>
+
 </LinearLayout>
