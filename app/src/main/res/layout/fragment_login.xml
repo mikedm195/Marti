@@ -13,10 +13,10 @@
         android:layout_weight="0.28" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/marti"
         android:layout_width="wrap_content"
         android:layout_height="98dp"
-        app:srcCompat="@drawable/ic_menu_gallery"
+        app:srcCompat="@drawable/marti"
         android:layout_weight="0.02" />
 
     <Space

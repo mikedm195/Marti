@@ -27,9 +27,9 @@ public class Splash extends Activity {
 
             Uri path= Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.a1);
             Random r = new Random();
-            int ceis = r.nextInt(2 - 0) + 0;
+            int ceis = r.nextInt(3 - 1) + 1;
             switch (ceis){
-                case 0:
+                case 3:
                     path = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.a1);
                     break;
                 case 1:
