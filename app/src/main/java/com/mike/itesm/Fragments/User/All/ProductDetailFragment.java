@@ -258,7 +258,7 @@ public class ProductDetailFragment extends Fragment {
 
     public void removeFromCart() {
 
-        StringRequest addCartReq = new StringRequest(Request.Method.DELETE, CART_API,
+        StringRequest addCartReq = new StringRequest(Request.Method.DELETE, CART_API + "?user_id=" + userID + "&product_id="+ productID,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

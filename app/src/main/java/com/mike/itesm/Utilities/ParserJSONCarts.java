@@ -46,7 +46,6 @@ public class ParserJSONCarts {
         Product product = null;
         ShoppingCart cart = null;
         _array_carts.clear();
-        Log.w("objeto", "-------->"+arr.length()+"");
         try {
             for(int i = 0;i<arr.length();i++) {
 
@@ -71,11 +70,9 @@ public class ParserJSONCarts {
                 cart.setUser_id(obj.getInt("user_id"));
                 cart.setProduct_id(obj.getInt("product_id"));
                 cart.setQuantity(obj.getInt("quantity"));
-                cart.setColor(obj.getString("color"));
                 cart.setSize(obj.getDouble("size"));
                 _array_carts.add(cart);
             }
-            Log.w("objeto","size--->"+_array_carts.size()+"");
             return _array_carts;
 
         } catch (JSONException e1) {
