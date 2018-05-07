@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.mike.itesm.Fragments.User.All.Buscar;
 import com.mike.itesm.Fragments.User.All.LoginFragment;
 import com.mike.itesm.Fragments.User.All.ShoppingCartFragment;
+import com.mike.itesm.Fragments.User.User.EditUserProfileFragment;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
@@ -95,6 +96,9 @@ public class MainActivity extends AppCompatActivity
             MenuItem logout = menu2.findItem(R.id.nav_logout);
             logout.setVisible(false);
             this.invalidateOptionsMenu();
+            MenuItem edit = menu2.findItem(R.id.nav_edit);
+            edit.setVisible(false);
+            this.invalidateOptionsMenu();
             MenuItem login = menu2.findItem(R.id.nav_login);
             login.setVisible(true);
         }else {
@@ -103,6 +107,8 @@ public class MainActivity extends AppCompatActivity
             this.invalidateOptionsMenu();
             MenuItem logout = menu2.findItem(R.id.nav_logout);
             logout.setVisible(true);
+            MenuItem edit = menu2.findItem(R.id.nav_edit);
+            edit.setVisible(true);
         }
         return true;
     }
@@ -165,6 +171,10 @@ public class MainActivity extends AppCompatActivity
                 fragment = new Buscar();
                 fragmentSeleccionado = true;
                 Toast.makeText(this, "buscar" , Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_edit) {
+                fragment = new EditUserProfileFragment();
+                fragmentSeleccionado = true;
+                Toast.makeText(this, "Editar usuario" , Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_Cart) {
                 fragment = new ShoppingCartFragment();
                 fragmentSeleccionado = true;
