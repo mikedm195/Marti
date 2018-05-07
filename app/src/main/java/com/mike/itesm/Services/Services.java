@@ -13,7 +13,9 @@ public class Services {
     public static final String CART_API = host+"/api/cart";
     public static final String CART_LIST_API = host+"/api/cart/list";
     public static final String SELLER_LIST_API = host+"/api/seller/list";
+    public static final String SELLER_API = host+"/api/seller";
     public static final String ORDER_API = host+"/api/order";
+    public static final String CATEGORY_API = host+"/api/category";
     public static final String CATEGORY_LIST_API = host+"/api/category/list";
     public static final String COLOR_LIST_API = host+"/api/color/list";
     public static final String AGE_LIST_API = host+"/api/age/list";

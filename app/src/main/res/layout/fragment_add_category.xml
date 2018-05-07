@@ -1,0 +1,43 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.mike.itesm.Fragments.User.Admin.AddCategoryFragment">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.29" />
+
+    <ImageView
+        android:id="@+id/marti"
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        android:layout_weight="0.01"
+        app:srcCompat="@drawable/marti" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.04" />
+
+    <EditText
+        android:id="@+id/categoryNameTextField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:ems="10"
+        android:hint="Nombre de la categoría "
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/AddCategoryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Agregar categoría" />
+
+
+</FrameLayout>
