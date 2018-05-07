@@ -1,4 +1,23 @@
 <resources>
+
+    <string-array name="age_array">
+        <item>Adulto</item>
+        <item>Niño</item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Hombre</item>
+        <item>Mujer</item>
+        <item>Unisex</item>
+    </string-array>
+
+    <string-array name="category_array">
+        <item>Calzado</item>
+        <item>Chamarras</item>
+        <item>Playeras</item>
+        <item>shorts</item>
+        <item>Licras</item>
+    </string-array>
     <string name="app_name">Marti</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

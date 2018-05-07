@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mike.itesm.Fragments.User.All.Buscar;
 import com.mike.itesm.Fragments.User.All.LoginFragment;
 import com.mike.itesm.Fragments.User.All.ShoppingCartFragment;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
@@ -139,6 +140,8 @@ public class MainActivity extends AppCompatActivity
                 fragment = new ProductsFragment();
                 fragmentSeleccionado = true;
             }  else if (id == R.id.nav_buscar) {
+                fragment = new Buscar();
+                fragmentSeleccionado = true;
                 Toast.makeText(this, "buscar" , Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_Cart) {
                 fragment = new ShoppingCartFragment();
@@ -159,6 +162,8 @@ public class MainActivity extends AppCompatActivity
                 fragment = new ProductsFragment();
                 fragmentSeleccionado = true;
             } else if (id == R.id.nav_buscar) {
+                fragment = new Buscar();
+                fragmentSeleccionado = true;
                 Toast.makeText(this, "buscar" , Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_Cart) {
                 fragment = new ShoppingCartFragment();

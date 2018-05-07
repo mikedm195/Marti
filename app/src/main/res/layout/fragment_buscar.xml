@@ -1,13 +1,66 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mike.itesm.Fragments.User.All.Buscar">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <LinearLayout
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
-</FrameLayout>
+
+        <TextView
+            android:id="@+id/AgeTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edad"
+            android:padding="20dp"/>
+
+        <Spinner
+            android:layout_marginBottom="20dp"
+            android:padding="20dp"
+            android:id="@+id/AgeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:padding="20dp"
+            android:id="@+id/CategoryTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Categoría" />
+
+        <Spinner
+            android:layout_marginBottom="20dp"
+            android:padding="20dp"
+            android:id="@+id/CategorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:padding="20dp"
+            android:id="@+id/GenderTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Género" />
+
+        <Spinner
+            android:layout_marginBottom="20dp"
+            android:padding="20dp"
+            android:id="@+id/GenderSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buscar" />
+
+    </LinearLayout>
+</LinearLayout>
