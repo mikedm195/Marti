@@ -1,9 +1,5 @@
-package com.mike.itesm.Fragments.User.All;
+package com.mike.itesm.Fragments.User.ClientCRUD;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -31,17 +27,10 @@ import java.util.Map;
 
 import static com.mike.itesm.Services.Services.SIGNUP_API;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link SignupFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SignupFragment extends Fragment {
 
     Button signupBtn;
-    EditText firstnameTxt, lastnameTxt, emailTxt, passwordOneTxt, passwordTwoText, addressTxt, genderText, heightText, weightText;
+    EditText firstnameTxt, lastnameTxt, lastSecondnameTxt, contactTxt, photoText;
 
     public SignupFragment() {
         // Required empty public constructor
@@ -66,23 +55,14 @@ public class SignupFragment extends Fragment {
         signupBtn = (Button)view.findViewById(R.id.signupButton);
         firstnameTxt = (EditText)view.findViewById(R.id.firstNameTextField);
         lastnameTxt = (EditText)view.findViewById(R.id.lastNameTextField);
-        addressTxt = (EditText)view.findViewById(R.id.addressTextField);
-        emailTxt = (EditText)view.findViewById(R.id.emailTextFieldSignup);
-        passwordOneTxt = (EditText)view.findViewById(R.id.passwordOneTextField);
-        passwordTwoText = (EditText)view.findViewById(R.id.passwordTwoTextField);
-        genderText = (EditText)view.findViewById(R.id.genderTextField);
-        heightText = (EditText)view.findViewById(R.id.heightTextField);
-        weightText = (EditText)view.findViewById(R.id.weightTextField);
+        lastSecondnameTxt = (EditText)view.findViewById(R.id.lastSecondNameTextField);
+        contactTxt = (EditText)view.findViewById(R.id.contactTextField);
+        photoText = (EditText)view.findViewById(R.id.photoTextField);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (passwordOneTxt.getText().toString().equals(passwordTwoText.getText().toString()))
-                {
-                    signup();
-                } else {
-                    Toast.makeText(getContext(), R.string.passwordsNotMatchText, Toast.LENGTH_SHORT).show();
-                }
+                signup();
             }
         });
 
@@ -91,7 +71,6 @@ public class SignupFragment extends Fragment {
 
     private void signup()
     {
-
         StringRequest signupReq = new StringRequest(Request.Method.POST, SIGNUP_API,
                 new Response.Listener<String>() {
                     @Override
@@ -127,13 +106,9 @@ public class SignupFragment extends Fragment {
                 Map<String,String> params = new HashMap<>();
                 params.put("name",firstnameTxt.getText().toString());
                 params.put("last_name",lastnameTxt.getText().toString());
-                params.put("email",emailTxt.getText().toString());
-                params.put("password",passwordOneTxt.getText().toString());
-                params.put("address",addressTxt.getText().toString());
-                params.put("gender",genderText.getText().toString());
-                params.put("weight",weightText.getText().toString());
-                params.put("height",heightText.getText().toString());
-                params.put("rol","0");
+                params.put("last_second_name",lastSecondnameTxt.getText().toString());
+                params.put("contact",contactTxt.getText().toString());
+                params.put("photo",photoText.getText().toString());
                 return params;
             }
         };

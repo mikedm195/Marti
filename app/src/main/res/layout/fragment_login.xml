@@ -5,45 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context="com.mike.itesm.Fragments.User.All.LoginFragment">
+    tools:context="com.mike.itesm.Fragments.User.ClientCRUD.LoginFragment">
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.28" />
 
-    <ImageView
-        android:id="@+id/marti"
-        android:layout_width="wrap_content"
-        android:layout_height="98dp"
-        app:srcCompat="@drawable/marti"
-        android:layout_weight="0.02" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.09" />
-
     <EditText
-        android:id="@+id/emailTextField"
+        android:id="@+id/nameTextField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:ems="10"
-        android:hint="@string/emailText"
+        android:hint="Name"
         android:inputType="textWebEmailAddress" />
-
-    <EditText
-        android:id="@+id/passwordTextField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="0.02"
-        android:ems="10"
-        android:hint="@string/passwordText"
-        android:inputType="textPassword" />
 
     <Space
         android:layout_width="match_parent"

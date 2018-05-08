@@ -1,7 +1,5 @@
-package com.mike.itesm.Fragments.User.Admin;
+package com.mike.itesm.Fragments.User.TreepCRUD;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.mike.itesm.Fragments.User.All.LoginFragment;
 import com.mike.itesm.marti.R;
 
 import org.json.JSONException;
@@ -29,25 +26,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.mike.itesm.Services.Services.CATEGORY_API;
-import static com.mike.itesm.Services.Services.SELLER_API;
-import static com.mike.itesm.Services.Services.SIGNUP_API;
 
-public class AddSellerFragment extends Fragment {
+public class AddCategoryFragment extends Fragment {
+    Button AddCategory, DeleteCategory;
+    EditText CategoryName;
 
-    Button AddSeller, DeleteSeller;
-    EditText SellerName;
-
-    private String seller_id;
+    private String category_Id;
 
     Bundle myIntent;
 
-    public AddSellerFragment() {
+    public AddCategoryFragment() {
         // Required empty public constructor
     }
 
-
-    public static AddSellerFragment newInstance(String param1, String param2) {
-        AddSellerFragment fragment = new AddSellerFragment();
+    public static AddCategoryFragment newInstance(String param1, String param2) {
+        AddCategoryFragment fragment = new AddCategoryFragment();
         return fragment;
     }
 
@@ -59,55 +52,54 @@ public class AddSellerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_seller, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_category, container, false);
         view.setBackgroundResource(R.color.white);
 
         myIntent = this.getArguments();
 
-        AddSeller = (Button)view.findViewById(R.id.AddSellerButton);
-        DeleteSeller = (Button)view.findViewById(R.id.DeleteSellerButton);
-        SellerName = (EditText)view.findViewById(R.id.sellerNameTextField);
+        AddCategory = (Button)view.findViewById(R.id.AddCategoryButton);
+        DeleteCategory = (Button)view.findViewById(R.id.DeleteCategoryButton);
+        CategoryName = (EditText)view.findViewById(R.id.categoryNameTextField);
 
         if(myIntent != null) {
-            DeleteSeller.setVisibility(View.VISIBLE);
-            AddSeller.setText("Actualizar vendedor");
-            seller_id = myIntent.getString("seller_id");
-            getSeller();
+            DeleteCategory.setVisibility(View.VISIBLE);
+            AddCategory.setText("Actualizar categoría");
+            category_Id = myIntent.getString("category_id");
+            getCategory();
         }
 
-        AddSeller.setOnClickListener(new View.OnClickListener() {
+        AddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (myIntent == null)
                 {
-                    addSeller();
+                    addCategory();
                 } else {
-                    updateSeller();
+                    updateCategory();
                 }
             }
         });
 
-        DeleteSeller.setOnClickListener(new View.OnClickListener() {
+        DeleteCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteSeller();
+                deleteCategory();
             }
         });
 
         return view;
     }
 
-
-    private void getSeller()
+    private void getCategory()
     {
-        StringRequest getSellerreq = new StringRequest(Request.Method.GET, SELLER_API + "?seller_id=" + seller_id,
+
+        StringRequest getcategoryreq = new StringRequest(Request.Method.GET, CATEGORY_API + "?category_id=" + category_Id,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject res = new JSONObject(response);
-                            SellerName.setText(res.getString("name"));
+                            CategoryName.setText(res.getString("name"));
                         } catch (JSONException e) {
                             Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
                         }
@@ -122,23 +114,23 @@ public class AddSellerFragment extends Fragment {
                 });
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(getSellerreq);
+        requestQueue.add(getcategoryreq);
     }
 
-    private void addSeller()
+    private void addCategory()
     {
 
-        StringRequest addsellerreq = new StringRequest(Request.Method.POST, SELLER_API,
+        StringRequest addcategoryreq = new StringRequest(Request.Method.POST, CATEGORY_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject res = new JSONObject(response);
-                            if(res.getString("seller_id").equals("-1"))
+                            if(res.getString("category_id").equals("-1"))
                             {
                                 Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
                             } else {
-                                Fragment newFragment = new SellerFragment();
+                                Fragment newFragment = new CategoryFragment();
                                 FragmentTransaction transaction = (getFragmentManager().beginTransaction());
                                 transaction.replace(R.id.frame_layout, newFragment);
                                 transaction.commit();
@@ -158,23 +150,23 @@ public class AddSellerFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("name",SellerName.getText().toString());
+                params.put("name",CategoryName.getText().toString());
 
                 return params;
             }
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(addsellerreq);
+        requestQueue.add(addcategoryreq);
     }
 
-    private void updateSeller()
+    private void updateCategory()
     {
-        StringRequest addcategoryreq = new StringRequest(Request.Method.PUT, SELLER_API,
+        StringRequest addcategoryreq = new StringRequest(Request.Method.PUT, CATEGORY_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Fragment newFragment = new SellerFragment();
+                        Fragment newFragment = new CategoryFragment();
                         FragmentTransaction transaction = (getFragmentManager().beginTransaction());
                         transaction.replace(R.id.frame_layout, newFragment);
                         transaction.commit();
@@ -190,8 +182,8 @@ public class AddSellerFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("seller_id",seller_id);
-                params.put("name",SellerName.getText().toString());
+                params.put("category_id",category_Id);
+                params.put("name",CategoryName.getText().toString());
 
                 return params;
             }
@@ -201,13 +193,13 @@ public class AddSellerFragment extends Fragment {
         requestQueue.add(addcategoryreq);
     }
 
-    private void deleteSeller()
+    private void deleteCategory()
     {
-        StringRequest deletecategoryreq = new StringRequest(Request.Method.DELETE, SELLER_API + "?seller_id=" + seller_id,
+        StringRequest deletecategoryreq = new StringRequest(Request.Method.DELETE, CATEGORY_API + "?category_id=" + category_Id,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Fragment newFragment = new SellerFragment();
+                        Fragment newFragment = new CategoryFragment();
                         FragmentTransaction transaction = (getFragmentManager().beginTransaction());
                         transaction.replace(R.id.frame_layout, newFragment);
                         transaction.commit();
@@ -224,4 +216,5 @@ public class AddSellerFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(deletecategoryreq);
     }
+
 }

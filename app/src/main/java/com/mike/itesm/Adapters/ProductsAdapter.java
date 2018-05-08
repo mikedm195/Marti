@@ -3,7 +3,6 @@ package com.mike.itesm.Adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,12 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mike.itesm.Fragments.User.Admin.ProductDetailAdminFragment;
-import com.mike.itesm.Fragments.User.All.ProductDetailFragment;
+import com.mike.itesm.Fragments.User.TreepCRUD.ProductDetailAdminFragment;
+import com.mike.itesm.Fragments.User.ClientCRUD.ProductDetailFragment;
 import com.mike.itesm.Objects.Product;
 import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
-import com.mike.itesm.Services.AppController;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

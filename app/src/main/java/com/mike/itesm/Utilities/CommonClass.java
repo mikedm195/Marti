@@ -6,11 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mike.itesm.Fragments.User.Admin.AddInventoryAdminFragment;
-import com.mike.itesm.Fragments.User.Admin.AddProductAdminFragment;
-import com.mike.itesm.Fragments.User.All.ShoppingCartFragment;
+import com.mike.itesm.Fragments.User.TreepCRUD.AddInventoryAdminFragment;
+import com.mike.itesm.Fragments.User.TreepCRUD.AddProductAdminFragment;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
-import com.mike.itesm.Objects.ShoppingCart;
 import com.mike.itesm.marti.R;
 
 /**

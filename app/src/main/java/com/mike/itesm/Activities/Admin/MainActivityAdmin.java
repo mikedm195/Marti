@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.mike.itesm.Fragments.User.Admin.InventoryAdminFragment;
+import com.mike.itesm.Fragments.User.TreepCRUD.InventoryAdminFragment;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.Utilities.CommonClass;
 import com.mike.itesm.marti.R;

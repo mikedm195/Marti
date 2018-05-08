@@ -4,21 +4,8 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
-tools:context="com.mike.itesm.Fragments.User.All.SignupFragment"
+tools:context="com.mike.itesm.Fragments.User.ClientCRUD.SignupFragment"
 android:weightSum="1">
-
-
-<Space
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="0.29" />
-
-<ImageView
-    android:id="@+id/imageView3"
-    android:layout_width="match_parent"
-    android:layout_height="98dp"
-    android:layout_weight="0.01"
-    app:srcCompat="@drawable/marti" />
 
 <Space
     android:layout_width="match_parent"
@@ -61,13 +48,13 @@ android:weightSum="1">
     android:inputType="textPersonName" />
 
 <EditText
-    android:id="@+id/addressTextField"
+    android:id="@+id/lastSecondNameTextField"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:ems="10"
-    android:hint="@string/addressText"
+    android:hint="Apellido Materno"
     android:inputType="textPersonName" />
 
 <LinearLayout
@@ -78,19 +65,19 @@ android:weightSum="1">
     android:orientation="horizontal">
 
     <EditText
-        android:id="@+id/heightTextField"
+        android:id="@+id/contactTextField"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/heightText"
+        android:hint="Contacto"
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/weightTextField"
+        android:id="@+id/photoTextField"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/weightText"
+        android:hint="Foto"
         android:inputType="number" />
 
     <EditText

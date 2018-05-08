@@ -15,11 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mike.itesm.Fragments.User.All.ProductDetailFragment;
-import com.mike.itesm.Objects.Product;
+import com.mike.itesm.Fragments.User.ClientCRUD.ProductDetailFragment;
 import com.mike.itesm.Objects.ShoppingCart;
 import com.mike.itesm.marti.R;
-import com.mike.itesm.Services.AppController;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

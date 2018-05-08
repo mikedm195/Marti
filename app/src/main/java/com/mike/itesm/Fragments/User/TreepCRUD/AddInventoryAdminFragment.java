@@ -1,4 +1,4 @@
-package com.mike.itesm.Fragments.User.Admin;
+package com.mike.itesm.Fragments.User.TreepCRUD;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -19,7 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.marti.R;
 
 import org.json.JSONException;
@@ -28,39 +27,35 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.mike.itesm.Services.Services.PRODUCTS_API;
+import static com.mike.itesm.Services.Services.INVENTORY_API;
 
-public class AddProductAdminFragment extends Fragment {
+public class AddInventoryAdminFragment extends Fragment {
 
-    private EditText nameTxt, idTxt, photoTxt, videoTxt, categoryTxt, colorTxt, priceText, ageText;
+    private EditText storeTxt, productTxt, quantityTxt, sizeTxt;
     private Button addBtn;
     ProgressDialog progress_bar;
 
-    public static AddProductAdminFragment newInstance() {
-        AddProductAdminFragment fragment = new AddProductAdminFragment();
+    public static AddInventoryAdminFragment newInstance() {
+        AddInventoryAdminFragment fragment = new AddInventoryAdminFragment();
         return fragment;
     }
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_product_admin, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_inventory_admin, container, false);
         view.setBackgroundResource(R.color.white);
 
         progress_bar = new ProgressDialog(getContext());
         progress_bar.setMessage(getContext().getString(R.string.loadingDataText));
         progress_bar.setCancelable(false);
 
+        storeTxt = (EditText) view.findViewById(R.id.storeInventoryAddAdminText);
+        productTxt = (EditText) view.findViewById(R.id.productInventoryAddAdminText);
+        quantityTxt = (EditText) view.findViewById(R.id.quantityInventoryAddAdminText);
+        sizeTxt = (EditText) view.findViewById(R.id.sizeInventoryAddAdminText);
 
-        nameTxt = (EditText)view.findViewById(R.id.nameProdAdminAddField);
-        photoTxt = (EditText)view.findViewById(R.id.PhotoTextField);
-        videoTxt = (EditText)view.findViewById(R.id.VideoTextField);
-        categoryTxt = (EditText)view.findViewById(R.id.CategoryTextField);
-        colorTxt = (EditText)view.findViewById(R.id.ColoroTextField);
-        priceText = (EditText)view.findViewById(R.id.priceProdAdminAddField);
-        ageText = (EditText)view.findViewById(R.id.AgeTextField);
-
-        addBtn = (Button) view.findViewById(R.id.addProdAdminAddButton);
+        addBtn = (Button) view.findViewById(R.id.addInventoryAddAdminButton);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,42 +74,48 @@ public class AddProductAdminFragment extends Fragment {
 
     void confirmInsertProduct() {
         new AlertDialog.Builder(getContext())
-                .setTitle("Insert Product?")
-                .setMessage("Are you sure you want to create this product?")
+                .setTitle("Insert Product in Inventory?")
+                .setMessage("Are you sure you want to insert this product to the inventory?")
                 .setNegativeButton(android.R.string.cancel, null) // dismisses by default
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        doProductInsert();
+                        doInventoryInsert();
                     }
                 })
                 .create()
                 .show();
     }
 
-    void doProductInsert() {
+    void doInventoryInsert() {
 
         progress_bar.show();
 
-        StringRequest addProduct = new StringRequest(Request.Method.POST, PRODUCTS_API,
+        StringRequest addInventory = new StringRequest(Request.Method.POST, INVENTORY_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progress_bar.cancel();
                         try {
                             JSONObject res = new JSONObject(response);
-                            if(res.getString("product_id").equals("-1"))
+                            if(res.getString("code").equals("01"))
                             {
-                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Inventory Inserted" , Toast.LENGTH_SHORT).show();
 
-                            } else {
-                                Toast.makeText(getContext(), "Product Inserted" , Toast.LENGTH_SHORT).show();
-
-                                Fragment newFragment = new ProductsFragment();
+                                Fragment newFragment = new InventoryAdminFragment();
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.frame_layout_admin, newFragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
+
+                            } else if (res.getString("code").equals("02"))
+                            {
+                                Toast.makeText(getContext(), R.string.missingValuesText , Toast.LENGTH_SHORT).show();
+                            } else if (res.getString("code").equals("04"))
+                            {
+                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), R.string.unknownResponseText , Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
@@ -133,18 +134,15 @@ public class AddProductAdminFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("name",nameTxt.getText().toString());
-                params.put("photo",photoTxt.getText().toString());
-                params.put("video",videoTxt.getText().toString());
-                params.put("category_id",categoryTxt.getText().toString());
-                params.put("color",colorTxt.getText().toString());
-                params.put("price",priceText.getText().toString());
-                params.put("age",ageText.getText().toString());
+                params.put("id_product",productTxt.getText().toString());
+                params.put("id_store",storeTxt.getText().toString());
+                params.put("quantity",quantityTxt.getText().toString());
+                params.put("size",sizeTxt.getText().toString());
 
                 return params;
             }
         };
 
-        Volley.newRequestQueue(getContext()).add(addProduct);
+        Volley.newRequestQueue(getContext()).add(addInventory);
     }
 }

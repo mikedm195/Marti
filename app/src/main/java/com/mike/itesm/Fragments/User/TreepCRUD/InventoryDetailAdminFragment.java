@@ -1,4 +1,4 @@
-package com.mike.itesm.Fragments.User.Admin;
+package com.mike.itesm.Fragments.User.TreepCRUD;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,39 +26,34 @@ import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.marti.R;
 import com.mike.itesm.Services.AppController;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.mike.itesm.Services.Services.PRODUCTS_API;
-import static com.mike.itesm.Services.Services.PRODUCT_DELETE_API;
+import static com.mike.itesm.Services.Services.INVENTORY_API;
+import static com.mike.itesm.Services.Services.INVENTORY_DELETE_API;
 
-public class ProductDetailAdminFragment extends Fragment {
+public class InventoryDetailAdminFragment extends Fragment {
 
-    private String productID;
-    private EditText nameTxt, brandTxt, descriptionTxt, priceTxt, categoryTxt, imageURLTxt;
-    private String name, brand, description, imageURL, category;
-    private Double price;
-    private Float size = 0.0f;
-    private Integer id;
+    private String inventoryID;
+    private EditText productTxt, storeTxt, quantityTxt, sizeTxt;
+    private String productID, storeID, quantity, size, imageURL;
     private Button updateBtn, deleteBtn;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     NetworkImageView image;
-    SeekBar sizeBar;
     ProgressDialog progress_bar;
 
-    public static ProductDetailAdminFragment newInstance() {
-        ProductDetailAdminFragment fragment = new ProductDetailAdminFragment();
+    public static InventoryDetailAdminFragment newInstance() {
+        InventoryDetailAdminFragment fragment = new InventoryDetailAdminFragment();
         return fragment;
     }
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_detail_admin, container, false);
+        View view = inflater.inflate(R.layout.fragment_inventory_detail_admin, container, false);
         view.setBackgroundResource(R.color.white);
 
         progress_bar = new ProgressDialog(getContext());
@@ -67,64 +61,55 @@ public class ProductDetailAdminFragment extends Fragment {
         progress_bar.setCancelable(false);
         progress_bar.show();
 
-        nameTxt = (EditText) view.findViewById(R.id.nameProdAdminDetailField);
-        brandTxt = (EditText) view.findViewById(R.id.brandProdAdminDetailField);
-        descriptionTxt = (EditText) view.findViewById(R.id.descriptionProdAdminDetailField);
-        priceTxt = (EditText) view.findViewById(R.id.priceProdAdminDetailField);
-        categoryTxt = (EditText) view.findViewById(R.id.categoryProdAdminDetailField);
-        imageURLTxt = (EditText) view.findViewById(R.id.imageurlProdAdminDetailField);
+        productTxt = (EditText) view.findViewById(R.id.productInventoryDetailAdminText);
+        storeTxt = (EditText) view.findViewById(R.id.storeInventoryDetailAdminText);
+        quantityTxt = (EditText) view.findViewById(R.id.quantityInventoryDetailAdminText);
+        sizeTxt = (EditText) view.findViewById(R.id.sizeInventoryDetailAdminText);
 
-        updateBtn = (Button) view.findViewById(R.id.editProdAdminDetailButton);
-        deleteBtn = (Button) view.findViewById(R.id.deleteProdAdminDetailButton);
+        updateBtn = (Button) view.findViewById(R.id.editInventoryDetailAdminText);
+        deleteBtn = (Button) view.findViewById(R.id.deleteInventoryDetailAdminText);
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
-        image = (NetworkImageView) view.findViewById(R.id.thumbnailAdminDetailField);
+        image = (NetworkImageView) view.findViewById(R.id.thumbnailInventoryDetailAdminText);
 
         Bundle myIntent = this.getArguments();
 
-        if(myIntent != null) {
-            productID = myIntent.getString("productID");
+        if (myIntent != null) {
+            inventoryID = myIntent.getString("inventoryID");
         }
 
-        StringRequest productsReq = new StringRequest(Request.Method.GET, PRODUCTS_API + "?id=" + productID,
+        StringRequest productsReq = new StringRequest(Request.Method.GET, INVENTORY_API + "?id=" + inventoryID,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progress_bar.cancel();
                         try {
                             JSONObject res = new JSONObject(response);
-                            if (res.getString("code").equals("01"))
-                            {
-                                JSONArray arrayProducts = res.getJSONArray("product_data");
-                                JSONObject product = (JSONObject) arrayProducts.get(0);
+                            if (res.getString("code").equals("01")) {
+                                JSONObject product = res.getJSONObject("inventory_data");
 
-                                name = product.getString("name");
-                                brand = product.getString("brand");
-                                id = product.getInt("id");
-                                description = product.getString("description");
+                                productID = product.getString("id_product");
+                                storeID = product.getString("id_store");
+                                size = product.getString("size");
+                                quantity = product.getString("quantity");
                                 imageURL = product.getString("image_url");
-                                price = product.getDouble("price");
-                                category = product.getString("id_category");
 
-                                nameTxt.setText(name, TextView.BufferType.EDITABLE);
-                                brandTxt.setText(brand, TextView.BufferType.EDITABLE);
-                                descriptionTxt.setText(description, TextView.BufferType.EDITABLE);
-                                priceTxt.setText("" + price, TextView.BufferType.EDITABLE);
+                                productTxt.setText(productID, TextView.BufferType.EDITABLE);
+                                storeTxt.setText(storeID, TextView.BufferType.EDITABLE);
+                                sizeTxt.setText(size, TextView.BufferType.EDITABLE);
+                                quantityTxt.setText(quantity, TextView.BufferType.EDITABLE);
                                 image.setImageUrl(imageURL, imageLoader);
-                                categoryTxt.setText(category, TextView.BufferType.EDITABLE);
-                                imageURLTxt.setText(imageURL, TextView.BufferType.EDITABLE);
 
 
-                            } else if (res.getString("code").equals("04"))
-                            {
-                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
+                            } else if (res.getString("code").equals("04")) {
+                                Toast.makeText(getContext(), R.string.queryErrorText, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getContext(), R.string.unknownResponseText , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.unknownResponseText, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -161,13 +146,13 @@ public class ProductDetailAdminFragment extends Fragment {
 
     void confirmUpdateProduct() {
         new AlertDialog.Builder(getContext())
-                .setTitle("Update Product?")
-                .setMessage("Are you sure you want to update this product? This action can't be undone")
+                .setTitle("Update Inventory?")
+                .setMessage("Are you sure you want to update this inventory item? This action can't be undone")
                 .setNegativeButton(android.R.string.cancel, null) // dismisses by default
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        doProductUpdate();
+                        doInventoryUpdate();
                     }
                 })
                 .create()
@@ -176,51 +161,48 @@ public class ProductDetailAdminFragment extends Fragment {
 
     void confirmDeleteProduct() {
         new AlertDialog.Builder(getContext())
-                .setTitle("Delete Product?")
-                .setMessage("Are you sure you want to delete this product? This action can't be undone")
+                .setTitle("Delete Inventory Item?")
+                .setMessage("Are you sure you want to delete this inventory item? This action can't be undone")
                 .setNegativeButton(android.R.string.cancel, null) // dismisses by default
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        doProductDelete();
+                        doInventoryDelete();
                     }
                 })
                 .create()
                 .show();
     }
 
-    void doProductUpdate() {
+    void doInventoryUpdate() {
 
         progress_bar.show();
 
-        StringRequest updateProduct = new StringRequest(Request.Method.PUT, PRODUCTS_API,
+        StringRequest updateProduct = new StringRequest(Request.Method.PUT, INVENTORY_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progress_bar.cancel();
                         try {
                             JSONObject res = new JSONObject(response);
-                            if(res.getString("code").equals("01"))
-                            {
-                                Toast.makeText(getContext(), "Product Updated" , Toast.LENGTH_SHORT).show();
+                            if (res.getString("code").equals("01")) {
+                                Toast.makeText(getContext(), "Inventory Updated", Toast.LENGTH_SHORT).show();
 
-                                Fragment newFragment = new ProductsFragment();
+                                Fragment newFragment = new InventoryAdminFragment();
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.frame_layout_admin, newFragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
 
-                            } else if (res.getString("code").equals("02"))
-                            {
-                                Toast.makeText(getContext(), R.string.missingValuesText , Toast.LENGTH_SHORT).show();
-                            } else if (res.getString("code").equals("04"))
-                            {
-                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
+                            } else if (res.getString("code").equals("02")) {
+                                Toast.makeText(getContext(), R.string.missingValuesText, Toast.LENGTH_SHORT).show();
+                            } else if (res.getString("code").equals("04")) {
+                                Toast.makeText(getContext(), R.string.queryErrorText, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getContext(), R.string.unknownResponseText , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.unknownResponseText, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -231,7 +213,7 @@ public class ProductDetailAdminFragment extends Fragment {
                         Toast.makeText(getContext(), "Error: " + error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
                     }
-                }){
+                }) {
 
             @Override
             public String getBodyContentType() {
@@ -240,21 +222,19 @@ public class ProductDetailAdminFragment extends Fragment {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/x-www-form-urlencoded");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("id",productID);
-                params.put("name",nameTxt.getText().toString());
-                params.put("description",descriptionTxt.getText().toString());
-                params.put("image_url",imageURLTxt.getText().toString());
-                params.put("price",priceTxt.getText().toString());
-                params.put("brand",brandTxt.getText().toString());
-                params.put("id_category",categoryTxt.getText().toString());
+                Map<String, String> params = new HashMap<>();
+                params.put("id", inventoryID);
+                params.put("id_product", productTxt.getText().toString());
+                params.put("id_store", storeTxt.getText().toString());
+                params.put("size", sizeTxt.getText().toString());
+                params.put("quantity", quantityTxt.getText().toString());
 
                 return params;
             }
@@ -264,20 +244,19 @@ public class ProductDetailAdminFragment extends Fragment {
 
     }
 
-    void doProductDelete() {
+    void doInventoryDelete() {
 
         progress_bar.show();
 
-        StringRequest deleteProduct = new StringRequest(Request.Method.PUT, PRODUCTS_API,
+        StringRequest deleteProduct = new StringRequest(Request.Method.POST, INVENTORY_DELETE_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progress_bar.cancel();
                         try {
                             JSONObject res = new JSONObject(response);
-                            if(res.getString("code").equals("01"))
-                            {
-                                Toast.makeText(getContext(), "Product Deleted" , Toast.LENGTH_SHORT).show();
+                            if (res.getString("code").equals("01")) {
+                                Toast.makeText(getContext(), "Inventory Item Deleted", Toast.LENGTH_SHORT).show();
 
                                 Fragment newFragment = new ProductsFragment();
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -285,17 +264,15 @@ public class ProductDetailAdminFragment extends Fragment {
                                 transaction.addToBackStack(null);
                                 transaction.commit();
 
-                            } else if (res.getString("code").equals("02"))
-                            {
-                                Toast.makeText(getContext(), R.string.missingValuesText , Toast.LENGTH_SHORT).show();
-                            } else if (res.getString("code").equals("04"))
-                            {
-                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
+                            } else if (res.getString("code").equals("02")) {
+                                Toast.makeText(getContext(), R.string.missingValuesText, Toast.LENGTH_SHORT).show();
+                            } else if (res.getString("code").equals("04")) {
+                                Toast.makeText(getContext(), R.string.queryErrorText, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getContext(), R.string.unknownResponseText , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.unknownResponseText, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -306,18 +283,17 @@ public class ProductDetailAdminFragment extends Fragment {
                         Toast.makeText(getContext(), "Error: " + error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
                     }
-                }){
+                }) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("id", productID);
+                Map<String, String> params = new HashMap<>();
+                params.put("id", inventoryID);
 
                 return params;
             }
         };
 
         Volley.newRequestQueue(getContext()).add(deleteProduct);
-
     }
 }

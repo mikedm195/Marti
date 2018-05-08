@@ -14,12 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.mike.itesm.Fragments.User.Admin.CategoryFragment;
-import com.mike.itesm.Fragments.User.Admin.SellerFragment;
-import com.mike.itesm.Fragments.User.All.Buscar;
-import com.mike.itesm.Fragments.User.All.LoginFragment;
-import com.mike.itesm.Fragments.User.All.ShoppingCartFragment;
-import com.mike.itesm.Fragments.User.All.Sucursales;
+import com.mike.itesm.Fragments.User.TreepCRUD.CategoryFragment;
+import com.mike.itesm.Fragments.User.TreepCRUD.SellerFragment;
+import com.mike.itesm.Fragments.User.ClientCRUD.LoginFragment;
 import com.mike.itesm.Fragments.User.User.EditUserProfileFragment;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.Objects.Category;

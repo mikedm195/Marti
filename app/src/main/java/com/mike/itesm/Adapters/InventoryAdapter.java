@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.mike.itesm.Fragments.User.Admin.InventoryDetailAdminFragment;
+import com.mike.itesm.Fragments.User.TreepCRUD.InventoryDetailAdminFragment;
 import com.mike.itesm.Objects.Inventory;
 import com.mike.itesm.marti.R;
 import com.mike.itesm.Services.AppController;

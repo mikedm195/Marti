@@ -1,9 +1,5 @@
-package com.mike.itesm.Fragments.User.All;
+package com.mike.itesm.Fragments.User.ClientCRUD;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.mike.itesm.Activities.MainActivity;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
@@ -44,7 +39,7 @@ import static com.mike.itesm.Services.Services.LOGIN_API;
 public class LoginFragment extends Fragment {
 
     Button loginBtn, signupBtn;
-    EditText emailTxt, passwordTxt;
+    EditText nameTxt;
     private User userData;
 
     public static LoginFragment newInstance(String param1, String param2) {
@@ -65,8 +60,7 @@ public class LoginFragment extends Fragment {
 
         loginBtn = (Button)view.findViewById(R.id.loginButton);
         signupBtn = (Button)view.findViewById(R.id.signupButton);
-        emailTxt = (EditText)view.findViewById(R.id.emailTextField);
-        passwordTxt = (EditText)view.findViewById(R.id.passwordTextField);
+        nameTxt = (EditText)view.findViewById(R.id.nameTextField);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +88,7 @@ public class LoginFragment extends Fragment {
     private void login()
     {
 
-        StringRequest loginReq = new StringRequest(Request.Method.GET, LOGIN_API+"?email="+emailTxt.getText()+"&password="+passwordTxt.getText(),
+        StringRequest loginReq = new StringRequest(Request.Method.GET, LOGIN_API+"?name="+nameTxt.getText(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -104,7 +98,6 @@ public class LoginFragment extends Fragment {
                             {
                                 Toast.makeText(getContext(), R.string.welcomeText , Toast.LENGTH_SHORT).show();
                                 userData.getInstance().setUserID(res.getInt("user_id"));
-                                userData.getInstance().setRole(res.getInt("rol"));
 
                                 Fragment fragment = new ProductsFragment();
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -112,7 +105,7 @@ public class LoginFragment extends Fragment {
                                 transaction.commit();
 
                             } else {
-                                Toast.makeText(getContext(), "Invalid email/password" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "You don't have an account" , Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -129,8 +122,7 @@ public class LoginFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("email",emailTxt.getText().toString());
-                map.put("password",passwordTxt.getText().toString());
+                map.put("name",nameTxt.getText().toString());
                 return map;
             }
         };

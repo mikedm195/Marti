@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mike.itesm.Fragments.User.Admin.AddCategoryFragment;
-import com.mike.itesm.Fragments.User.Admin.AddSellerFragment;
-import com.mike.itesm.Fragments.User.Admin.SellerFragment.OnListFragmentInteractionListener;
+import com.mike.itesm.Fragments.User.TreepCRUD.AddSellerFragment;
+import com.mike.itesm.Fragments.User.TreepCRUD.SellerFragment.OnListFragmentInteractionListener;
 import com.mike.itesm.Objects.Seller;
 import com.mike.itesm.marti.R;
 
