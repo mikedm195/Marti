@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mike.itesm.Fragments.User.User.ProductsFragment">
+
+    <Button
+        android:id="@+id/nuevoVendedor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar vendedor" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/seller_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"/>
+
+</FrameLayout>

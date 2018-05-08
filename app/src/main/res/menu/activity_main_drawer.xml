@@ -12,19 +12,31 @@
         <item
             android:id="@+id/nav_principal"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Principal" />
+            android:title="Productos" />
         <item
             android:id="@+id/nav_buscar"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Buscar" />
         <item
+            android:id="@+id/nav_Cart"
+            android:icon="@drawable/shopping_cart"
+            android:title="Shopping Cart" />
+        <item
+            android:id="@+id/nav_category"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Editar categorias" />
+        <item
+            android:id="@+id/nav_seller"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Editar vendedores" />
+        <item
             android:id="@+id/nav_edit"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Editar perfil" />
         <item
-            android:id="@+id/nav_Cart"
-            android:icon="@drawable/shopping_cart"
-            android:title="Shopping Cart" />
+            android:id="@+id/nav_sucursales"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Sucursales" />
     </group>
 
     <item android:title="Communicate">

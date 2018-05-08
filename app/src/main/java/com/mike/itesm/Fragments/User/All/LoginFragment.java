@@ -106,19 +106,10 @@ public class LoginFragment extends Fragment {
                                 userData.getInstance().setUserID(res.getInt("user_id"));
                                 userData.getInstance().setRole(res.getInt("rol"));
 
-                                if(res.getString("rol").equals("0")) {
-
-                                    //Intent intent = new Intent(getActivity(), MainActivity.class);
-                                    //startActivity(intent);
-                                   // Intent myintent=new Intent(MainActivity.this, MainActivity.class);
-                                    // startActivity(myintent);
-                                    Fragment fragment = new ProductsFragment();
-                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.frame_layout, fragment);
-                                    transaction.commit();
-                                }
-
-
+                                Fragment fragment = new ProductsFragment();
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                transaction.replace(R.id.frame_layout, fragment);
+                                transaction.commit();
 
                             } else {
                                 Toast.makeText(getContext(), "Invalid email/password" , Toast.LENGTH_SHORT).show();

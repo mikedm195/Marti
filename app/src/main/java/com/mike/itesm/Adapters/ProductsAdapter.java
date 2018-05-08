@@ -98,7 +98,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                         Fragment newFragment = new ProductDetailAdminFragment();
                         FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
                         newFragment.setArguments(id);
-                        transaction.replace(R.id.frame_layout_admin, newFragment);
+                        transaction.replace(R.id.frame_layout, newFragment);
                         transaction.addToBackStack(null);
                         // Commit the transaction
                         transaction.commit();

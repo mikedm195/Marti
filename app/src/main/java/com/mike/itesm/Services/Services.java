@@ -5,7 +5,7 @@ package com.mike.itesm.Services;
  */
 
 public class Services {
-    public static final String host = "http://192.168.15.23:3000";
+    public static final String host = "http://192.168.1.71:3000";
     public static final String LOGIN_API = host+"/api/user/auth";
     public static final String SIGNUP_API = host+"/api/user";
     public static final String PRODUCTS_API = host+"/api/product";

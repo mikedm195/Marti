@@ -1,13 +1,9 @@
 package com.mike.itesm.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,14 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mike.itesm.Fragments.User.Admin.CategoryFragment;
+import com.mike.itesm.Fragments.User.Admin.SellerFragment;
 import com.mike.itesm.Fragments.User.All.Buscar;
 import com.mike.itesm.Fragments.User.All.LoginFragment;
 import com.mike.itesm.Fragments.User.All.ShoppingCartFragment;
 import com.mike.itesm.Fragments.User.User.EditUserProfileFragment;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
+import com.mike.itesm.Objects.Category;
+import com.mike.itesm.Objects.Seller;
 import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
 
@@ -31,7 +30,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CategoryFragment.OnListFragmentInteractionListener, SellerFragment.OnListFragmentInteractionListener {
     int waitTime = 2000;
     NavigationView navigationView;
     Menu menu2;
@@ -92,24 +91,30 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         menu2 = navigationView.getMenu();
-        if(!loggedin) {
-            MenuItem logout = menu2.findItem(R.id.nav_logout);
-            logout.setVisible(false);
-            this.invalidateOptionsMenu();
-            MenuItem edit = menu2.findItem(R.id.nav_edit);
-            edit.setVisible(false);
-            this.invalidateOptionsMenu();
-            MenuItem login = menu2.findItem(R.id.nav_login);
-            login.setVisible(true);
+        if(User.getInstance().getUserID() == 0) {
+            menu2.findItem(R.id.nav_login).setVisible(true);
+            menu2.findItem(R.id.nav_Cart).setVisible(false);
+            menu2.findItem(R.id.nav_category).setVisible(false);
+            menu2.findItem(R.id.nav_seller).setVisible(false);
+            menu2.findItem(R.id.nav_edit).setVisible(false);
+
+            menu2.findItem(R.id.nav_logout).setVisible(false);
         }else {
-            MenuItem login = menu2.findItem(R.id.nav_login);
-            login.setVisible(false);
-            this.invalidateOptionsMenu();
-            MenuItem logout = menu2.findItem(R.id.nav_logout);
-            logout.setVisible(true);
-            MenuItem edit = menu2.findItem(R.id.nav_edit);
-            edit.setVisible(true);
+            menu2.findItem(R.id.nav_login).setVisible(false);
+            menu2.findItem(R.id.nav_logout).setVisible(true);
+            menu2.findItem(R.id.nav_edit).setVisible(true);
+            if(User.getInstance().getRole() == 0){
+                menu2.findItem(R.id.nav_Cart).setVisible(true);
+                menu2.findItem(R.id.nav_category).setVisible(false);
+                menu2.findItem(R.id.nav_seller).setVisible(false);
+            }else {
+                menu2.findItem(R.id.nav_Cart).setVisible(false);
+                menu2.findItem(R.id.nav_category).setVisible(true);
+                menu2.findItem(R.id.nav_seller).setVisible(true);
+            }
+
         }
+        this.invalidateOptionsMenu();
         return true;
     }
 
@@ -137,56 +142,37 @@ public class MainActivity extends AppCompatActivity
         boolean fragmentSeleccionado = false;
         Fragment fragment = null;
 
-
-        if(User.getInstance().getUserID()<=0){
-            if (id == R.id.nav_login) {
-                fragment = new LoginFragment();
-                fragmentSeleccionado = true;
-            } else if (id == R.id.nav_principal) {
-                fragment = new ProductsFragment();
-                fragmentSeleccionado = true;
-            }  else if (id == R.id.nav_buscar) {
-                fragment = new Buscar();
-                fragmentSeleccionado = true;
-                Toast.makeText(this, "buscar" , Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.nav_Cart) {
-                fragment = new ShoppingCartFragment();
-                fragmentSeleccionado = true;
-            }
-        } else if (loggedin || User.getInstance().getUserID() > 0){
-            loggedin = true;
-            String user_name = User.getInstance().getFirstName();
-            View headerView = navigationView.getHeaderView(0);
-            TextView navUsername = (TextView) headerView.findViewById(R.id.name);
-            navUsername.setText(user_name);
-
-            if (id == R.id.nav_principal) {
-                fragment = new ProductsFragment();
-                fragmentSeleccionado = true;
-                Toast.makeText(this, "Principal" , Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.nav_principal) {
-                fragment = new ProductsFragment();
-                fragmentSeleccionado = true;
-            } else if (id == R.id.nav_buscar) {
-                fragment = new Buscar();
-                fragmentSeleccionado = true;
-                Toast.makeText(this, "buscar" , Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.nav_edit) {
-                fragment = new EditUserProfileFragment();
-                fragmentSeleccionado = true;
-                Toast.makeText(this, "Editar usuario" , Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.nav_Cart) {
-                fragment = new ShoppingCartFragment();
-                fragmentSeleccionado = true;
-            } else if (id == R.id.nav_logout) {
-                User.getInstance().setUserID(0);
-                loggedin = false;
-                MenuItem login = menu2.findItem(R.id.nav_login);
-                login.setVisible(true);
-                Toast.makeText(this, "logout" , Toast.LENGTH_SHORT).show();
-            }
+        if (id == R.id.nav_login) {
+            fragment = new LoginFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_principal) {
+            fragment = new ProductsFragment();
+            fragmentSeleccionado = true;
+        }  else if (id == R.id.nav_buscar) {
+            fragment = new Buscar();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_Cart) {
+            fragment = new ShoppingCartFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_edit) {
+            fragment = new EditUserProfileFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_category) {
+            fragment = new CategoryFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_seller) {
+            fragment = new SellerFragment();
+            fragmentSeleccionado = true;
+        } else if (id == R.id.nav_logout) {
+            User.getInstance().setUserID(0);
+            loggedin = false;
+            MenuItem login = menu2.findItem(R.id.nav_login);
+            login.setVisible(true);
+        } else if (id == R.id.nav_sucursales) {
+            //fragment = new SellerFragment();
+            //fragmentSeleccionado = true;
+            Toast.makeText(this, "Sucursales", Toast.LENGTH_SHORT).show();
         }
-
 
         if(fragmentSeleccionado){
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
@@ -195,5 +181,15 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onListFragmentInteraction(Category item) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Seller item) {
+
     }
 }
