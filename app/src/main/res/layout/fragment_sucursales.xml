@@ -1,0 +1,136 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.mike.itesm.Fragments.User.All.Sucursales">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:weightSum="1">
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.29" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.29" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:layout_weight="0.01"
+            app:srcCompat="@drawable/marti" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.03" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.03" />
+
+        <TextView
+            android:id="@+id/suc3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:fontFamily="sans-serif"
+            android:text="Deportes Martí "
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/suc3tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:fontFamily="sans-serif"
+            android:text="+52 5520 9874"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/suc3direc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:fontFamily="sans-serif"
+            android:text=" Pista El Sope s/n, Bosque de Chapultepec II Secc, 11100 Ciudad de México, CDMX"
+            android:textAlignment="center"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.03" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.03" />
+        <TextView
+            android:id="@+id/suc2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:fontFamily="sans-serif"
+            android:text="Martí Polanco"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/suc2tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:fontFamily="sans-serif"
+            android:text="+52 5520 7636"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/suc2direc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:fontFamily="sans-serif"
+            android:text="Vasco de Quiroga 3800, Antigua Mina La Totolapa, 05109 Cuajimalpa, CDMX"
+            android:textAlignment="center"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.03" />
+
+        <TextView
+            android:id="@+id/suc1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:fontFamily="sans-serif"
+            android:text="Centro Comercial Santa Fé"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/suc1tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:fontFamily="sans-serif"
+            android:text="+52 5520 0232"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/suc1direc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.02"
+            android:fontFamily="sans-serif"
+            android:text=" Av Ejército Nacional 980, Polanco, Polanco I Secc, 11510 Ciudad de México, CDMX"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+</FrameLayout>

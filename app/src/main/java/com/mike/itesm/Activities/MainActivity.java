@@ -19,6 +19,7 @@ import com.mike.itesm.Fragments.User.Admin.SellerFragment;
 import com.mike.itesm.Fragments.User.All.Buscar;
 import com.mike.itesm.Fragments.User.All.LoginFragment;
 import com.mike.itesm.Fragments.User.All.ShoppingCartFragment;
+import com.mike.itesm.Fragments.User.All.Sucursales;
 import com.mike.itesm.Fragments.User.User.EditUserProfileFragment;
 import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.Objects.Category;
@@ -169,8 +170,8 @@ public class MainActivity extends AppCompatActivity
             MenuItem login = menu2.findItem(R.id.nav_login);
             login.setVisible(true);
         } else if (id == R.id.nav_sucursales) {
-            //fragment = new SellerFragment();
-            //fragmentSeleccionado = true;
+            fragment = new Sucursales();
+            fragmentSeleccionado = true;
             Toast.makeText(this, "Sucursales", Toast.LENGTH_SHORT).show();
         }
 
