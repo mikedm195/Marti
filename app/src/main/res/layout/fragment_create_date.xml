@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mike.itesm.Fragments.User.ClientCRUD.UpdateClient">
+    tools:context="com.mike.itesm.Fragments.User.DateCRUD.CreateDateFragment">
+
 
     <Space
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.02"
         android:fontFamily="sans-serif"
-        android:text="Actualizar Cliente"
+        android:text="@string/SignupTitle"
         android:textAlignment="center"
         />
 
@@ -76,34 +77,25 @@
             android:ems="10"
             android:hint="Foto"
             android:inputType="textPersonName" />
+
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/editProdAdminDetailButton"
-            android:layout_width="match_parent"
+            android:id="@+id/signupButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:background="@android:color/black"
-            android:text="@string/editButtonText"
-            android:textColor="@android:color/white" />
+            android:text="@string/signupButton" />
 
-        <Button
-            android:id="@+id/deleteProdAdminDetailButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@android:color/holo_red_dark"
-            android:text="@string/deleteButtonText"
-            android:textColor="@android:color/white" />
+
     </LinearLayout>
 
 </FrameLayout>

@@ -1,4 +1,4 @@
-package com.mike.itesm.Fragments.User.TreepCRUD;
+package com.mike.itesm.Fragments.User.DateCRUD;
 
 import android.content.Context;
 import android.net.Uri;
@@ -28,21 +28,19 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.mike.itesm.Services.Services.DATE_API;
 import static com.mike.itesm.Services.Services.SIGNUP_API;
-import static com.mike.itesm.Services.Services.TREEP_API;
 
 
-public class CreateTreepFragment extends Fragment {
-    Button createTreepBtn;
-    EditText priceTxt, destiny_nameTxt, descriptionTxt, photoText;
-
-
-    public CreateTreepFragment() {
+public class CreateDateFragment extends Fragment {
+    Button createDateBtn;
+    EditText leaving_dateTxt, return_dateTxt, transportationTxt, durationTxt;
+   public CreateDateFragment() {
         // Required empty public constructor
     }
 
-    public static CreateTreepFragment newInstance(String param1, String param2) {
-        CreateTreepFragment fragment = new CreateTreepFragment();
+    public static CreateDateFragment newInstance(String param1, String param2) {
+        CreateDateFragment fragment = new CreateDateFragment();
         return fragment;
     }
 
@@ -54,32 +52,31 @@ public class CreateTreepFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_treep, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_date, container, false);
         view.setBackgroundResource(R.color.white);
 
-        createTreepBtn = (Button)view.findViewById(R.id.createTreepButton);
-        priceTxt = (EditText)view.findViewById(R.id.priceTextField);
-        destiny_nameTxt = (EditText)view.findViewById(R.id.destinyTextField);
-        descriptionTxt = (EditText)view.findViewById(R.id.descriptionTextField);
-        photoText = (EditText)view.findViewById(R.id.photoTextField);
+        createDateBtn = (Button)view.findViewById(R.id.signupButton);
+        leaving_dateTxt = (EditText)view.findViewById(R.id.firstNameTextField);
+        return_dateTxt = (EditText)view.findViewById(R.id.lastNameTextField);
+        transportationTxt = (EditText)view.findViewById(R.id.lastSecondNameTextField);
+        durationTxt = (EditText)view.findViewById(R.id.contactTextField);
 
-        createTreepBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createTreep();
-            }
-        });
+        createDateBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            createdate();
+        }
+    });
 
         return view;
-    }
+}
 
-    private void createTreep()
+    private void createdate()
     {
-        StringRequest createTreepReq = new StringRequest(Request.Method.POST, TREEP_API,
+        StringRequest signupReq = new StringRequest(Request.Method.POST, DATE_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getContext(), "Viaje agregado" , Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
@@ -92,15 +89,18 @@ public class CreateTreepFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("price",priceTxt.getText().toString());
-                params.put("destiny",destiny_nameTxt.getText().toString());
-                params.put("description",descriptionTxt.getText().toString());
-                params.put("photo",photoText.getText().toString());
+                params.put("name",leaving_dateTxt.getText().toString());
+                params.put("last_name",return_dateTxt.getText().toString());
+                params.put("last_second_name",transportationTxt.getText().toString());
+                params.put("contact",durationTxt.getText().toString());
                 return params;
             }
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(createTreepReq);
+        requestQueue.add(signupReq);
     }
+
+
+
 }

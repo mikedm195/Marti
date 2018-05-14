@@ -29,7 +29,6 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mike.itesm.Activities.Admin.MainActivityAdmin" />
 
 
     </application>

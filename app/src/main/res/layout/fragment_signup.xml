@@ -18,7 +18,7 @@ android:weightSum="1">
     android:layout_height="wrap_content"
     android:layout_weight="0.02"
     android:fontFamily="sans-serif"
-    android:text="@string/SignupTitle"
+    android:text="create Date"
     android:textAlignment="center"
     />
 
@@ -78,48 +78,10 @@ android:weightSum="1">
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Foto"
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/genderTextField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:hint="@string/genderText"
         android:inputType="textPersonName" />
 
 </LinearLayout>
 
-<EditText
-    android:id="@+id/emailTextFieldSignup"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:ems="10"
-    android:hint="@string/emailText"
-    android:inputType="textEmailAddress" />
-
-<EditText
-    android:id="@+id/passwordOneTextField"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:ems="10"
-    android:hint="@string/passwordText"
-    android:inputType="textPassword" />
-
-<EditText
-    android:id="@+id/passwordTwoTextField"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:ems="10"
-    android:hint="@string/passwordText"
-    android:inputType="textPassword" />
 
 <LinearLayout
     android:layout_width="match_parent"

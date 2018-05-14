@@ -1,6 +1,8 @@
-package com.mike.itesm.Fragments.User.ClientCRUD;
+package com.mike.itesm.Fragments.User.TreepCRUD;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mike.itesm.Fragments.User.ClientCRUD.LoginFragment;
 import com.mike.itesm.marti.R;
 
 import org.json.JSONException;
@@ -28,17 +31,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.mike.itesm.Services.Services.SIGNUP_API;
+import static com.mike.itesm.Services.Services.TREEP_API;
 
-public class UpdateClient extends Fragment {
-    Button signupBtn, deleteBtn;
-    EditText firstnameTxt, lastnameTxt, lastSecondnameTxt, contactTxt, photoText;
 
-    public UpdateClient() {
+public class UpdateTreepFragment extends Fragment {
+    Button updateBtn, deleteBtn;
+    EditText priceTxt, destiny_nameTxt, descriptionTxt, photoText;
+    public UpdateTreepFragment() {
         // Required empty public constructor
     }
 
-    public static UpdateClient newInstance(String param1, String param2) {
-        UpdateClient fragment = new UpdateClient();
+    public static UpdateTreepFragment newInstance(String param1, String param2) {
+        UpdateTreepFragment fragment = new UpdateTreepFragment();
         return fragment;
     }
 
@@ -50,21 +54,20 @@ public class UpdateClient extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_signup, container, false);
+        View view = inflater.inflate(R.layout.fragment_update_treep, container, false);
         view.setBackgroundResource(R.color.white);
 
-        signupBtn = (Button)view.findViewById(R.id.editProdAdminDetailButton);
+        updateBtn = (Button)view.findViewById(R.id.editProdAdminDetailButton);
         deleteBtn = (Button) view.findViewById(R.id.deleteProdAdminDetailButton);
-        firstnameTxt = (EditText)view.findViewById(R.id.firstNameTextField);
-        lastnameTxt = (EditText)view.findViewById(R.id.lastNameTextField);
-        lastSecondnameTxt = (EditText)view.findViewById(R.id.lastSecondNameTextField);
-        contactTxt = (EditText)view.findViewById(R.id.contactTextField);
+        priceTxt = (EditText)view.findViewById(R.id.priceTextField);
+        destiny_nameTxt = (EditText)view.findViewById(R.id.destinyTextField);
+        descriptionTxt = (EditText)view.findViewById(R.id.descriptionTextField);
         photoText = (EditText)view.findViewById(R.id.photoTextField);
 
-        signupBtn.setOnClickListener(new View.OnClickListener() {
+        updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UpdateClient();
+                UpdateTreep();
             }
         });
 
@@ -92,26 +95,14 @@ public class UpdateClient extends Fragment {
                 .create()
                 .show();
     }
-    private void UpdateClient()
+    private void UpdateTreep()
     {
-        StringRequest updateReq = new StringRequest(Request.Method.PUT, SIGNUP_API,
+        StringRequest updateReq = new StringRequest(Request.Method.PUT, TREEP_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject res = new JSONObject(response);
-                            if(res.getString("user_id").equals("-1"))
-                            {
-                                Toast.makeText(getContext(), R.string.queryErrorText , Toast.LENGTH_SHORT).show();
-
-
-                            } else {
-                                Toast.makeText(getContext(), "Se modificó el usuario" , Toast.LENGTH_SHORT).show();
-                                Fragment fragment = new LoginFragment();
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.replace(R.id.frame_layout, fragment);
-                                transaction.commit();
-                            }
                         } catch (JSONException e) {
                             Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
                         }
@@ -127,10 +118,9 @@ public class UpdateClient extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("name",firstnameTxt.getText().toString());
-                params.put("last_name",lastnameTxt.getText().toString());
-                params.put("last_second_name",lastSecondnameTxt.getText().toString());
-                params.put("contact",contactTxt.getText().toString());
+                params.put("price",priceTxt.getText().toString());
+                params.put("destiny",destiny_nameTxt.getText().toString());
+                params.put("description",descriptionTxt.getText().toString());
                 params.put("photo",photoText.getText().toString());
                 return params;
             }

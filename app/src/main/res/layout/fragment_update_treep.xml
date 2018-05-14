@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mike.itesm.Fragments.User.ClientCRUD.UpdateClient">
-
+    tools:context="com.mike.itesm.Fragments.User.TreepCRUD.UpdateTreepFragment">
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.02"
         android:fontFamily="sans-serif"
-        android:text="Actualizar Cliente"
+        android:text="Actualizar Viaje"
         android:textAlignment="center"
         />
 
@@ -25,33 +24,33 @@
         android:layout_weight="0.04" />
 
     <EditText
-        android:id="@+id/firstNameTextField"
+        android:id="@+id/priceTextField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:ems="10"
-        android:hint="@string/firstnameText"
+        android:hint="Precio"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/destinyTextField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:ems="10"
+        android:hint="Destino"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/lastNameTextField"
+        android:id="@+id/descriptionTextField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:ems="10"
-        android:hint="@string/lastnameText"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/lastSecondNameTextField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:ems="10"
-        android:hint="Apellido Materno"
+        android:hint="Descripción"
         android:inputType="textPersonName" />
 
     <LinearLayout
@@ -62,20 +61,13 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/contactTextField"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Contacto"
-            android:inputType="number" />
-
-        <EditText
             android:id="@+id/photoTextField"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Foto"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
+
     </LinearLayout>
 
     <LinearLayout

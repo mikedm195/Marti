@@ -17,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.mike.itesm.Fragments.User.User.ProductsFragment;
 import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
 
@@ -92,25 +91,6 @@ public class LoginFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject res = new JSONObject(response);
-                            if (!res.getString("user_id").equals("-1"))
-                            {
-                                Toast.makeText(getContext(), R.string.welcomeText , Toast.LENGTH_SHORT).show();
-                                userData.getInstance().setUserID(res.getInt("user_id"));
-
-                                Fragment fragment = new ProductsFragment();
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.replace(R.id.frame_layout, fragment);
-                                transaction.commit();
-
-                            } else {
-                                Toast.makeText(getContext(), "You don't have an account" , Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
-                        }
                     }
                 },
                 new Response.ErrorListener() {

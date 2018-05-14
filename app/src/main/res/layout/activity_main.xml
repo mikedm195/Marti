@@ -8,6 +8,24 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/agency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/treep_list_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"

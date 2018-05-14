@@ -2,44 +2,66 @@ package com.mike.itesm.Activities;
 
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mike.itesm.Fragments.User.TreepCRUD.CategoryFragment;
-import com.mike.itesm.Fragments.User.TreepCRUD.SellerFragment;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.mike.itesm.Adapters.TreepAdapter;
+import com.mike.itesm.Fragments.User.ClientCRUD.SignupFragment;
+import com.mike.itesm.Fragments.User.ClientCRUD.UpdateClient;
 import com.mike.itesm.Fragments.User.ClientCRUD.LoginFragment;
-import com.mike.itesm.Fragments.User.User.EditUserProfileFragment;
-import com.mike.itesm.Fragments.User.User.ProductsFragment;
-import com.mike.itesm.Objects.Category;
-import com.mike.itesm.Objects.Seller;
+import com.mike.itesm.Objects.Treep;
 import com.mike.itesm.Objects.User;
 import com.mike.itesm.marti.R;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CategoryFragment.OnListFragmentInteractionListener, SellerFragment.OnListFragmentInteractionListener {
+import java.util.ArrayList;
+
+import static com.mike.itesm.Services.Services.AGENCY_API;
+import static com.mike.itesm.Services.Services.TREEP_API;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
     int waitTime = 2000;
     NavigationView navigationView;
-    Menu menu2;
-    public boolean loggedin = false;
+
+
+    private RecyclerView RecyclerView;
+    private TreepAdapter mAdapter;
+
+    private TextView agencyName;
+    ArrayList<Treep> treepList = new ArrayList<Treep>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,29 +72,69 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-      //  HeaderLayout header = (HeaderLayout) findViewById(R.id.header_layout);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        //navigationView.closeDrawers();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+
+                        return true;
+                    }
+                });
 
 
 
+        agencyName = (TextView) findViewById(R.id.agency);
+        RecyclerView = (RecyclerView) findViewById(R.id.treep_list_recycler);
+        RecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
+        getAgencia();
 
-                Fragment selectedFragment = ProductsFragment.newInstance();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, selectedFragment);
-                transaction.commit();
-            }
-        };
+        StringRequest loginReq = new StringRequest(Request.Method.GET, TREEP_API,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray res = new JSONArray(response);
 
-        Timer timer = new Timer();
-        timer.schedule(task, waitTime);
+                            for(int i = 0;i<res.length();i++){
+                                JSONObject viajeObject = res.getJSONObject(i);
+                                Treep treep = new Treep();
+                                treep.setDestiny(viajeObject.getString("destiny"));
+                                treep.setDescription(viajeObject.getString("description"));
+                                treep.setPhoto(viajeObject.getString("photo"));
+                                treep.setPrice(viajeObject.getString("price"));
+                                treepList.add(treep);
+                                Log.w("value",treep.getDestiny()+"");
+                            }
+                            mAdapter = new TreepAdapter(treepList);
+                            RecyclerView.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this, "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(loginReq);
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -88,51 +150,24 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        menu2 = navigationView.getMenu();
-        if(User.getInstance().getUserID() == 0) {
-            menu2.findItem(R.id.nav_login).setVisible(true);
-            menu2.findItem(R.id.nav_Cart).setVisible(false);
-            menu2.findItem(R.id.nav_category).setVisible(false);
-            menu2.findItem(R.id.nav_seller).setVisible(false);
-            menu2.findItem(R.id.nav_edit).setVisible(false);
+        //menu2 = navigationView.getMenu();
 
-            menu2.findItem(R.id.nav_logout).setVisible(false);
-        }else {
-            menu2.findItem(R.id.nav_login).setVisible(false);
-            menu2.findItem(R.id.nav_logout).setVisible(true);
-            menu2.findItem(R.id.nav_edit).setVisible(true);
-            if(User.getInstance().getRole() == 0){
-                menu2.findItem(R.id.nav_Cart).setVisible(true);
-                menu2.findItem(R.id.nav_category).setVisible(false);
-                menu2.findItem(R.id.nav_seller).setVisible(false);
-            }else {
-                menu2.findItem(R.id.nav_Cart).setVisible(false);
-                menu2.findItem(R.id.nav_category).setVisible(true);
-                menu2.findItem(R.id.nav_seller).setVisible(true);
-            }
-
-        }
-        this.invalidateOptionsMenu();
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
-    @Override
+
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -143,10 +178,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_login) {
             fragment = new LoginFragment();
             fragmentSeleccionado = true;
+            Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_principal) {
-            fragment = new ProductsFragment();
+            fragment = new SignupFragment();
             fragmentSeleccionado = true;
-        }  else if (id == R.id.nav_buscar) {
+            Toast.makeText(this, "Signup", Toast.LENGTH_SHORT).show();
+        } /*  else if (id == R.id.nav_buscar) {
             fragment = new Buscar();
             fragmentSeleccionado = true;
         } else if (id == R.id.nav_Cart) {
@@ -170,7 +207,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new Sucursales();
             fragmentSeleccionado = true;
             Toast.makeText(this, "Sucursales", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         if(fragmentSeleccionado){
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
@@ -181,13 +218,34 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onListFragmentInteraction(Category item) {
 
-    }
 
-    @Override
-    public void onListFragmentInteraction(Seller item) {
+    void getAgencia(){
+        StringRequest loginReq = new StringRequest(Request.Method.GET, AGENCY_API,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray res = new JSONArray(response);
 
+                            JSONObject ag = res.getJSONObject(0);
+
+                            agencyName.setText(ag.getString("name"));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this, "Error! " + e.getLocalizedMessage() , Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(loginReq);
     }
 }

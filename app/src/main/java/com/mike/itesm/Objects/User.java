@@ -1,44 +1,11 @@
 package com.mike.itesm.Objects;
 
-/**
- * Created by mike on 03/05/18.
- */
-
 public class User {
     private String FirstName;
     private String LastName;
-    private String Address;
-    private String ZipCode;
-    private String State;
-    private String Email;
-    private int UserID;
-    private int Role;
-    private int Gender;
-    private int Weight;
-    private int Height;
-
-
-    public int getGender() {
-        return Gender;
-    }
-
-    public void setGender(int Gender) {
-        this.Gender = Gender;
-    }
-    public int getWeight() {
-        return Weight;
-    }
-
-    public void setWeight(int Weight) {
-        this.Weight = Weight;
-    }
-    public int getHeight() {
-        return Height;
-    }
-
-    public void setHeight(int Height) {
-        this.Height = Height;
-    }
+    private String Contact;
+    private String Photo;
+    private int id;
 
     public String getLastName() {
         return LastName;
@@ -56,51 +23,27 @@ public class User {
     }
 
     public String getAddress() {
-        return Address;
+        return Contact;
     }
 
-    public void setAddress(String Address) {
-        this.Address = Address;
+    public void setAddress(String Contact) {
+        this.Contact= Contact;
     }
 
-    public String getZipCode() {
-        return ZipCode;
+    public String getPhoto() {
+        return Photo;
     }
 
-    public void setZipCode(String ZipCode) {
-        this.ZipCode = ZipCode;
+    public void setPhoto(String Photo) {
+        this.Photo= Photo;
     }
 
-    public String getState() {
-        return State;
+    public int getid() {
+        return id;
     }
 
-    public void setState(String State) {
-        this.State = State;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String Email) {
-        this.Email = Email;
-    }
-
-    public int getUserID() {
-        return UserID;
-    }
-
-    public void setUserID(int UserID) {
-        this.UserID = UserID;
-    }
-
-    public int getRole() {
-        return Role;
-    }
-
-    public void setRole(int Role) {
-        this.Role = Role;
+    public void setid(int id) {
+        this.id = id;
     }
 
     private static final User holder = new User();
